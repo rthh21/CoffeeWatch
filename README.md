@@ -1,11 +1,11 @@
-# WatchManager - Platformă pentru Gestiunea unui Magazin de Ceasuri
+# WatchManager - Platformă pentru Gestiunea unui Magazin de Ceasuri (Etapa 1)
 
 Proiectul are ca scop gestionarea unui magazin de ceasuri. Aplicația permite administrarea produselor din stoc, a clienților și a comenzilor plasate, alături de alte detalii specifice (recenzii, accesorii).
 
 ## 1. Definirea sistemului
 
 **Tipuri de obiecte (entități):**
-Sistemul este modelat folosind 8 tipuri principale de obiecte:
+Sistemul este format din 8 obiecte:
 1. `Ceas` (clasa de bază pentru produse)
 2. `CeasMecanic` (subclasă pentru ceasurile clasice/mecanice)
 3. `Smartwatch` (subclasă pentru ceasurile inteligente)
@@ -16,7 +16,7 @@ Sistemul este modelat folosind 8 tipuri principale de obiecte:
 8. `Recenzie` (feedback din partea clienților)
 
 **Acțiuni și interogări principale:**
-În cadrul sistemului au fost definite și implementate următoarele 10 acțiuni:
+În cadrul sistemului am definit și implementat următoarele 10 acțiuni:
 1. Adăugarea unui ceas nou în stocul magazinului.
 2. Înregistrarea unui utilizator/client nou în baza de date.
 3. Plasarea unei comenzi (cu actualizarea aferentă a stocului).
@@ -30,9 +30,9 @@ Sistemul este modelat folosind 8 tipuri principale de obiecte:
 
 ## 2. Detalii de implementare
 
-Aplicația este dezvoltată strict în Java, respectând cerințele OOP stabilite:
+Aplicația este dezvoltată strict în Java, respectând următoarele cerințe:
 
-- **Clase și încapsulare**: Toate entitățile de mai sus au atribute private sau protected, starea lor fiind controlată prin constructori și metode de acces (getteri și setteri).
+- **Clase și încapsulare**: Atribute private sau protected, starea lor fiind controlată prin constructori și metode de acces (getteri și setteri).
 - **Colecții utilizate**: 
   - `TreeSet<Ceas>`: folosit pentru stocul de ceasuri. Astfel, colecția este mereu sortată (îndeplinind cerința pentru colecție sortată).
   - `HashMap<String, Client>`: utilizat pentru înregistrarea și căutarea rapidă a clienților după o cheie unică (adresa de email).

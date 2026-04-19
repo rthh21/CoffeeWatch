@@ -1,0 +1,10 @@
+C:\Users\rth\Documents\Cod\An3\Proiect\src\ro\watchmanager\main\Main.java
+C:\Users\rth\Documents\Cod\An3\Proiect\src\ro\watchmanager\model\Brand.java
+C:\Users\rth\Documents\Cod\An3\Proiect\src\ro\watchmanager\model\Ceas.java
+C:\Users\rth\Documents\Cod\An3\Proiect\src\ro\watchmanager\model\CeasMecanic.java
+C:\Users\rth\Documents\Cod\An3\Proiect\src\ro\watchmanager\model\Client.java
+C:\Users\rth\Documents\Cod\An3\Proiect\src\ro\watchmanager\model\Comanda.java
+C:\Users\rth\Documents\Cod\An3\Proiect\src\ro\watchmanager\model\Curea.java
+C:\Users\rth\Documents\Cod\An3\Proiect\src\ro\watchmanager\model\Recenzie.java
+C:\Users\rth\Documents\Cod\An3\Proiect\src\ro\watchmanager\model\Smartwatch.java
+C:\Users\rth\Documents\Cod\An3\Proiect\src\ro\watchmanager\service\MagazinService.java

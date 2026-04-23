@@ -19,7 +19,7 @@ Sistemul este format din 8 obiecte:
 În cadrul sistemului am definit și implementat următoarele 10 acțiuni:
 1. Adăugarea unui ceas nou în stocul magazinului.
 2. Înregistrarea unui utilizator/client nou în baza de date.
-3. Plasarea unei comenzi (cu actualizarea aferentă a stocului).
+3. Plasarea unei comenzi (cu actualizarea stocului).
 4. Afișarea tuturor ceasurilor disponibile, sortate automat după preț.
 5. Filtrarea și afișarea produselor pe baza unui anumit brand.
 6. Modificarea detaliilor (stocului și a prețului) pentru un anumit model de ceas deja existent.
@@ -38,5 +38,5 @@ Aplicația este dezvoltată strict în Java, respectând următoarele cerințe:
   - `HashMap<String, Client>`: utilizat pentru înregistrarea și căutarea rapidă a clienților după o cheie unică (adresa de email).
   - `List<Comanda>`: folosită pentru a menține istoricul tuturor comenzilor.
 - **Moștenire și polimorfism**: Clasa de bază `Ceas` este moștenită activ de `CeasMecanic` și `Smartwatch`. Aceste obiecte derivate sunt folosite și integrate împreună cu obiectele de bază în aceeași colecție de stoc.
-- **Clasa Serviciu**: Logica aplicației a fost decuplată de modele prin introducerea clasei `MagazinService`. Aceasta are rolul de a gestiona colecțiile și de a expune toate operațiile și interogările sistemului.
+- **Clasa Serviciu**: Logica aplicației a fost decuplată de modele prin clasa `MagazinService`. Aceasta are rolul de a gestiona colecțiile și de a expune toate operațiile și interogările sistemului.
 - **Clasa Main**: Reprezintă punctul de intrare în aplicație. Aici se instanțiază datele de test și se fac apeluri succesive către clasa de serviciu pentru a demonstra funcționalitățile.

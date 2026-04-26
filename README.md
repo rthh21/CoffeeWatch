@@ -1,4 +1,4 @@
-# WatchManager - Platformă pentru Gestiunea unui Magazin de Ceasuri (Etapa 1)
+# Platformă pentru Gestiunea unui Magazin de Ceasuri (Etapa 1)
 
 Proiectul are ca scop gestionarea unui magazin de ceasuri. Aplicația permite administrarea produselor din stoc, a clienților și a comenzilor plasate, alături de alte detalii specifice (recenzii, accesorii).
 

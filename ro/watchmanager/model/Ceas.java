@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Ceas implements Comparable<Ceas> {
+public abstract class Ceas implements Comparable<Ceas>, Discountable {
     private String id;
     private Brand brand;
     private String numeModel;
@@ -21,6 +21,11 @@ public abstract class Ceas implements Comparable<Ceas> {
         this.stoc = stoc;
         this.curea = curea;
         this.recenzii = new ArrayList<>();
+    }
+
+    @Override
+    public void aplicaDiscount(double procent) {
+        this.pret -= (this.pret * procent / 100);
     }
 
     public void adaugaRecenzie(Recenzie r) {

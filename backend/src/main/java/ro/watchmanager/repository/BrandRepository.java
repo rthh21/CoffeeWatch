@@ -5,22 +5,31 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BrandRepository {
-    private Connection connection;
+public class BrandRepository extends GenericRepository<Brand, Integer> {
+    private static BrandRepository instance;
 
-    public BrandRepository() {
-        this.connection = DatabaseConnectionManager.getInstance().getConnection();
+    private BrandRepository() {
+        super();
     }
 
+    public static BrandRepository getInstance() {
+        if (instance == null) {
+            instance = new BrandRepository();
+        }
+        return instance;
+    }
+
+    @Override
     public void create(Brand brand) throws SQLException {
         String sql = "INSERT INTO Brand (nume) VALUES (?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, brand.getNume());
             stmt.executeUpdate();
         }
     }
 
-    public Brand read(int id) throws SQLException {
+    @Override
+    public Brand read(Integer id) throws SQLException {
         String sql = "SELECT * FROM Brand WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -32,7 +41,8 @@ public class BrandRepository {
         return null;
     }
 
-    public void update(int id, Brand brand) throws SQLException {
+    @Override
+    public void update(Integer id, Brand brand) throws SQLException {
         String sql = "UPDATE Brand SET nume = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, brand.getNume());
@@ -41,11 +51,25 @@ public class BrandRepository {
         }
     }
 
-    public void delete(int id) throws SQLException {
+    @Override
+    public void delete(Integer id) throws SQLException {
         String sql = "DELETE FROM Brand WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
+    }
+
+    @Override
+    public List<Brand> findAll() throws SQLException {
+        List<Brand> brands = new ArrayList<>();
+        String sql = "SELECT * FROM Brand";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                brands.add(new Brand(rs.getString("nume")));
+            }
+        }
+        return brands;
     }
 }

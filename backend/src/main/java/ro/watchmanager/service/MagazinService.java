@@ -18,6 +18,16 @@ public class MagazinService {
         this.auditService = AuditService.getInstance();
     }
 
+    public TreeSet<Ceas> getStocCeasuri() {
+        return stocCeasuri;
+    }
+
+    public List<Ceas> getCeasuriByBrand(String numeBrand) {
+        return stocCeasuri.stream()
+                .filter(c -> c.getBrand().getNume().equalsIgnoreCase(numeBrand))
+                .toList();
+    }
+
     public void adaugaCeas(Ceas ceas) {
         stocCeasuri.add(ceas);
         auditService.logEveniment("adaugaCeas");

@@ -1,0 +1,14 @@
+<div class="container">
+  <h2>Watch Collection</h2>
+  <div class="watch-grid">
+    <div *ngFor="let watch of watches" class="watch-card">
+      <h3>{{ watch.numeModel }}</h3>
+      <p><strong>Brand:</strong> {{ watch.brand?.nume }}</p>
+      <p><strong>Price:</strong> {{ watch.pret }} RON</p>
+      <p><strong>Stock:</strong> {{ watch.stoc }}</p>
+    </div>
+  </div>
+  <div *ngIf="watches.length === 0">
+    <p>No watches found in the collection.</p>
+  </div>
+</div>

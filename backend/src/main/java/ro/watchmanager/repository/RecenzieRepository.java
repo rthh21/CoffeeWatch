@@ -15,8 +15,8 @@ public class RecenzieRepository {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, ceasId);
             stmt.setString(2, r.getUtilizator());
-            stmt.setString(3, r.getComentariu());
-            stmt.setInt(4, r.getNota());
+            stmt.setString(3, r.getText());
+            stmt.setInt(4, r.getRating().getValoare());
             stmt.executeUpdate();
         }
     }

@@ -41,9 +41,13 @@ public class Main {
         service.adaugaRecenzie("C1", new Recenzie(Rating.CINCI, "Exceptional!"));
 
         // Testare Actiunea 3: Plasare comanda
-        Comanda comanda1 = new Comanda("CMD1", client1, LocalDate.now());
-        comanda1.adaugaCeas(rolex);
-        service.plasareComanda(comanda1);
+        try {
+            Comanda comanda1 = new Comanda("CMD1", client1, LocalDate.now());
+            comanda1.adaugaCeas(rolex);
+            service.plasareComanda(comanda1);
+        } catch (Exception e) {
+            System.err.println("Eroare la plasarea comenzii: " + e.getMessage());
+        }
 
         // Testare Actiunea 8: Istoric comenzi
         System.out.println("\n=== Istoric client ion@test.ro ===");

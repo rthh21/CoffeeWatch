@@ -20,12 +20,12 @@ public class CeasRepository {
             stmt.setInt(5, ceas.getStoc());
             if (ceas instanceof CeasMecanic) {
                 stmt.setString(6, "Mecanic");
-                stmt.setString(7, ((CeasMecanic) ceas).getMecanism());
+                stmt.setString(7, ((CeasMecanic) ceas).getTipMecanism().name());
                 stmt.setNull(8, Types.INTEGER);
             } else {
                 stmt.setString(6, "Smartwatch");
                 stmt.setNull(7, Types.VARCHAR);
-                stmt.setInt(8, ((Smartwatch) ceas).getAutonomieBaterie());
+                stmt.setInt(8, ((Smartwatch) ceas).getCapacitateBaterieMah());
             }
             stmt.executeUpdate();
         }

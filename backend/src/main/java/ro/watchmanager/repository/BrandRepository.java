@@ -21,9 +21,10 @@ public class BrandRepository extends GenericRepository<Brand, Integer> {
 
     @Override
     public void create(Brand brand) throws SQLException {
-        String sql = "INSERT INTO Brand (nume) VALUES (?)";
+        String sql = "INSERT INTO Brand (nume, tara_origine) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, brand.getNume());
+            stmt.setString(2, brand.getTaraOrigine());
             stmt.executeUpdate();
         }
     }
@@ -35,7 +36,7 @@ public class BrandRepository extends GenericRepository<Brand, Integer> {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Brand(rs.getString("nume"));
+                return new Brand(rs.getString("nume"), rs.getString("tara_origine"));
             }
         }
         return null;
@@ -43,10 +44,11 @@ public class BrandRepository extends GenericRepository<Brand, Integer> {
 
     @Override
     public void update(Integer id, Brand brand) throws SQLException {
-        String sql = "UPDATE Brand SET nume = ? WHERE id = ?";
+        String sql = "UPDATE Brand SET nume = ?, tara_origine = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, brand.getNume());
-            stmt.setInt(2, id);
+            stmt.setString(2, brand.getTaraOrigine());
+            stmt.setInt(3, id);
             stmt.executeUpdate();
         }
     }
@@ -67,7 +69,7 @@ public class BrandRepository extends GenericRepository<Brand, Integer> {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                brands.add(new Brand(rs.getString("nume")));
+                brands.add(new Brand(rs.getString("nume"), rs.getString("tara_origine")));
             }
         }
         return brands;

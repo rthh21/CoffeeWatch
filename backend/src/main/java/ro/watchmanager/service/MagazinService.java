@@ -98,9 +98,9 @@ public class MagazinService {
 
     public List<Ceas> getCeasuriInStocLimitat(int prag) {
         auditService.logEveniment("getCeasuriInStocLimitat");
-        List<Ceas> limitat = new ArrayList<>();
-        stocCeasuri.stream().filter(c -> c.getStoc() < prag).forEach(limitat::add);
-        return limitat;
+        return stocCeasuri.stream()
+                .filter(c -> c.getStoc() < prag)
+                .toList();
     }
 
     public void stergeClient(String email) {
@@ -110,13 +110,16 @@ public class MagazinService {
 
     public double getValoareMedieComenzi() {
         auditService.logEveniment("getValoareMedieComenzi");
-        return istoricComenzi.stream().mapToDouble(Comanda::getValoareTotala).average().orElse(0.0);
+        return istoricComenzi.stream()
+                .mapToDouble(Comanda::getValoareTotala)
+                .average()
+                .orElse(0.0);
     }
 
     public List<Ceas> getTopProduseRecenzate() {
         auditService.logEveniment("getTopProduseRecenzate");
-        List<Ceas> top = new ArrayList<>(stocCeasuri);
-        top.sort((c1, c2) -> Integer.compare(c2.getRecenzii().size(), c1.getRecenzii().size()));
-        return top;
+        return stocCeasuri.stream()
+                .sorted((c1, c2) -> Integer.compare(c2.getRecenzii().size(), c1.getRecenzii().size()))
+                .toList();
     }
 }

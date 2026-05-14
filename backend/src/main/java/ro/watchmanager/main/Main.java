@@ -14,7 +14,7 @@ public class Main {
         Curea c1 = new Curea("Otel", 20);
         Curea c2 = new Curea("Silicon", 22);
 
-        CeasMecanic rolex = new CeasMecanic("C1", b1, "Submariner", 45000.0, 5, c1, "Automat", 48);
+        CeasMecanic rolex = new CeasMecanic("C1", b1, "Submariner", 45000.0, 5, c1, TipMecanism.AUTOMAT, 48);
         Smartwatch appleW = new Smartwatch("C2", b2, "Watch Series 9", 2500.0, 20, c2, "watchOS", 300);
         
         service.adaugaCeas(rolex);
@@ -38,7 +38,7 @@ public class Main {
         service.afisareCeasuriSortate();
 
         // Testare Actiunea 9: Adaugare recenzie
-        service.adaugaRecenzie("C1", new Recenzie(5, "Exceptional!"));
+        service.adaugaRecenzie("C1", new Recenzie(Rating.CINCI, "Exceptional!"));
 
         // Testare Actiunea 3: Plasare comanda
         Comanda comanda1 = new Comanda("CMD1", client1, LocalDate.now());

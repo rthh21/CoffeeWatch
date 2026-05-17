@@ -24,8 +24,8 @@ Acest document reflectă stadiul actual al proiectului conform cerințelor impus
 | :--- | :---: | :--- |
 | Modelare baze de date (tabele, relații) | ✅ | Definite în `schema.sql`. |
 | Diagramă ERD | ✅ | Definită în `ERD.md` (format Mermaid). |
-| Servicii CRUD pentru 6 obiecte | ✅ | Există repozitorii pentru Brand, Ceas, Client, Comanda, Curea, Recenzie. |
-| Servicii singleton generice DB | ✅ | Arhitectură generică (`GenericRepository`) și Singleton (`BrandRepository`, `ClientRepository`, etc.). |
+| Servicii CRUD pentru 6 obiecte | ✅ | Operații complete în Repozitorii: Brand, Ceas, Client, Comanda, Curea, Recenzie. |
+| Servicii singleton generice DB | ✅ | Toate repozitoriile extind `GenericRepository` și sunt implementate ca Singleton. |
 
 ## 4) Serviciu de audit
 | Cerință | Status | Locație / Detalii |
@@ -46,3 +46,4 @@ Acest document reflectă stadiul actual al proiectului conform cerințelor impus
 
 ---
 **Notă:** Proiectul se compilează și rulează prin intermediul scriptului `compile_and_run.ps1` (pentru mediile Windows) sau manual prin apelarea `Main`.
+ prin apelarea `Main`.

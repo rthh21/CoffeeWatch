@@ -16,7 +16,7 @@ Sistemul este format din 8 obiecte:
 8. `Recenzie` (feedback din partea clienților)
 
 **Acțiuni și interogări principale:**
-În cadrul sistemului am definit și implementat următoarele 10 acțiuni:
+În cadrul sistemului am definit și implementat următoarele 15 acțiuni:
 1. Adăugarea unui ceas nou în stocul magazinului.
 2. Înregistrarea unui utilizator/client nou în baza de date.
 3. Plasarea unei comenzi (cu actualizarea stocului).
@@ -27,6 +27,11 @@ Sistemul este format din 8 obiecte:
 8. Vizualizarea istoricului detaliat de comenzi pentru un client specific.
 9. Adăugarea unei recenzii la un anumit ceas din stoc.
 10. Calcularea încasărilor (valoarea totală a comenzilor) înregistrate pentru o anumită dată calendaristică.
+11. Aplicarea unui discount general pentru toate produsele din stoc.
+12. Obținerea listei de ceasuri cu stoc limitat (sub un prag specificat).
+13. Eliminarea unui client din baza de date.
+14. Calcularea valorii medii a tuturor comenzilor plasate.
+15. Obținerea unui top al celor mai recenzate produse.
 
 ## 2. Detalii de implementare
 

@@ -20,6 +20,8 @@ CREATE TABLE Ceas (
     curea_id INT,
     tip VARCHAR(20),
     mecanism VARCHAR(100), -- pt Mecanic
+    rezerva_putere INT, -- pt Mecanic
+    sistem_operare VARCHAR(50), -- pt Smartwatch
     autonomie_baterie INT, -- pt Smartwatch
     FOREIGN KEY (brand_id) REFERENCES Brand(id),
     FOREIGN KEY (curea_id) REFERENCES Curea(id)

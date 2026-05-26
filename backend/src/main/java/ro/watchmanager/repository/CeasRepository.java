@@ -21,23 +21,27 @@ public class CeasRepository extends GenericRepository<Ceas, String> {
 
     @Override
     public void create(Ceas ceas) throws SQLException {
-        String sql = "INSERT INTO Ceas (id, brand_id, nume_model, pret, stoc, tip, mecanism, autonomie_baterie) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Ceas (id, brand_id, nume_model, pret, stoc, tip, mecanism, rezerva_putere, sistem_operare, autonomie_baterie) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, ceas.getId());
-            // We assume brand exists or we handle brand_id. For now, we search for brand by name or similar.
-            // Simplified: we'll use 1 or try to find the real ID.
-            stmt.setInt(2, 1); 
+            stmt.setInt(2, 1); // Simplified for now
             stmt.setString(3, ceas.getNumeModel());
             stmt.setDouble(4, ceas.getPret());
             stmt.setInt(5, ceas.getStoc());
             if (ceas instanceof CeasMecanic) {
+                CeasMecanic cm = (CeasMecanic) ceas;
                 stmt.setString(6, "Mecanic");
-                stmt.setString(7, ((CeasMecanic) ceas).getTipMecanism().name());
-                stmt.setNull(8, Types.INTEGER);
+                stmt.setString(7, cm.getTipMecanism().name());
+                stmt.setInt(8, cm.getRezervaPutereOre());
+                stmt.setNull(9, Types.VARCHAR);
+                stmt.setNull(10, Types.INTEGER);
             } else {
+                Smartwatch sw = (Smartwatch) ceas;
                 stmt.setString(6, "Smartwatch");
                 stmt.setNull(7, Types.VARCHAR);
-                stmt.setInt(8, ((Smartwatch) ceas).getCapacitateBaterieMah());
+                stmt.setNull(8, Types.INTEGER);
+                stmt.setString(9, sw.getSistemOperare());
+                stmt.setInt(10, sw.getCapacitateBaterieMah());
             }
             stmt.executeUpdate();
         }
@@ -58,19 +62,25 @@ public class CeasRepository extends GenericRepository<Ceas, String> {
 
     @Override
     public void update(String id, Ceas ceas) throws SQLException {
-        String sql = "UPDATE Ceas SET nume_model = ?, pret = ?, stoc = ?, mecanism = ?, autonomie_baterie = ? WHERE id = ?";
+        String sql = "UPDATE Ceas SET nume_model = ?, pret = ?, stoc = ?, mecanism = ?, rezerva_putere = ?, sistem_operare = ?, autonomie_baterie = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, ceas.getNumeModel());
             stmt.setDouble(2, ceas.getPret());
             stmt.setInt(3, ceas.getStoc());
             if (ceas instanceof CeasMecanic) {
-                stmt.setString(4, ((CeasMecanic) ceas).getTipMecanism().name());
-                stmt.setNull(5, Types.INTEGER);
+                CeasMecanic cm = (CeasMecanic) ceas;
+                stmt.setString(4, cm.getTipMecanism().name());
+                stmt.setInt(5, cm.getRezervaPutereOre());
+                stmt.setNull(6, Types.VARCHAR);
+                stmt.setNull(7, Types.INTEGER);
             } else {
+                Smartwatch sw = (Smartwatch) ceas;
                 stmt.setNull(4, Types.VARCHAR);
-                stmt.setInt(5, ((Smartwatch) ceas).getCapacitateBaterieMah());
+                stmt.setNull(5, Types.INTEGER);
+                stmt.setString(6, sw.getSistemOperare());
+                stmt.setInt(7, sw.getCapacitateBaterieMah());
             }
-            stmt.setString(6, id);
+            stmt.setString(8, id);
             stmt.executeUpdate();
         }
     }
@@ -112,10 +122,12 @@ public class CeasRepository extends GenericRepository<Ceas, String> {
 
         if ("Mecanic".equals(tip)) {
             TipMecanism mecanism = TipMecanism.valueOf(rs.getString("mecanism"));
-            return new CeasMecanic(id, brand, numeModel, pret, stoc, null, mecanism);
+            int rezerva = rs.getInt("rezerva_putere");
+            return new CeasMecanic(id, brand, numeModel, pret, stoc, null, mecanism, rezerva);
         } else {
+            String os = rs.getString("sistem_operare");
             int baterie = rs.getInt("autonomie_baterie");
-            return new Smartwatch(id, brand, numeModel, pret, stoc, null, baterie);
+            return new Smartwatch(id, brand, numeModel, pret, stoc, null, os, baterie);
         }
     }
 }

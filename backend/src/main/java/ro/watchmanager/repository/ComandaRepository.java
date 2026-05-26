@@ -113,9 +113,9 @@ public class ComandaRepository extends GenericRepository<Comanda, String> {
         Date data = rs.getDate("data_comanda");
         
         Client client = ClientRepository.getInstance().read(email);
+        Comanda comanda = new Comanda(id, client, data.toLocalDate());
         
         // Fetch items from junction table
-        List<Ceas> ceasuri = new ArrayList<>();
         String junctionSql = "SELECT ceas_id FROM Comanda_Ceas WHERE id_comanda = ?";
         try (PreparedStatement stmt = connection.prepareStatement(junctionSql)) {
             stmt.setString(1, id);
@@ -123,11 +123,11 @@ public class ComandaRepository extends GenericRepository<Comanda, String> {
             while (rsJ.next()) {
                 Ceas c = CeasRepository.getInstance().read(rsJ.getString("ceas_id"));
                 if (c != null) {
-                    ceasuri.add(c);
+                    comanda.adaugaCeas(c);
                 }
             }
         }
         
-        return new Comanda(id, client, ceasuri, data.toLocalDate());
+        return comanda;
     }
 }

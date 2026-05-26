@@ -113,9 +113,9 @@ public class RecenzieRepository extends GenericRepository<Recenzie, Integer> {
             default -> Rating.TREI;
         };
         return new Recenzie(
-                rs.getString("utilizator"),
+                rating,
                 rs.getString("comentariu"),
-                rating
+                rs.getString("utilizator")
         );
     }
 }

@@ -1,0 +1,10 @@
+<button 
+  (click)="scrollToTop.emit()" 
+  class="fixed bottom-8 right-8 bg-[#2c2c2e]/80 hover:bg-[#3a3a3c] backdrop-blur-md text-white w-12 h-12 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 z-50 border border-white/10"
+  [class.opacity-0]="!show"
+  [class.translate-y-4]="!show"
+  [class.pointer-events-none]="!show"
+  aria-label="Scroll to top"
+>
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+</button>

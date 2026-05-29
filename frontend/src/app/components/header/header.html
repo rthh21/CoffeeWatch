@@ -1,0 +1,25 @@
+<nav class="fixed top-0 w-full z-50 bg-black/70 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-4 md:px-12 h-[56px] text-xs font-medium">
+  <!-- Logo -->
+  <button class="text-lg font-semibold tracking-tight hover:text-white cursor-pointer transition-colors flex items-center gap-2 px-2 py-1 -ml-2" (click)="navigate.emit('home')">
+    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+    CoffeeWatch
+  </button>
+
+  <!-- Center Menu -->
+  <div class="hidden md:flex items-center space-x-2 text-[#a1a1a6]">
+    <button (click)="navigate.emit('catalog')" [class.text-white]="currentPage === 'catalog'" class="hover:text-white transition-colors px-4 py-2 rounded-md hover:bg-white/5">Catalog</button>
+    <button (click)="navigate.emit('admin')" [class.text-white]="currentPage === 'admin'" class="hover:text-white transition-colors px-4 py-2 rounded-md hover:bg-white/5">Admin</button>
+    <button (click)="navigate.emit('comenzi')" [class.text-white]="currentPage === 'comenzi'" class="hover:text-white transition-colors px-4 py-2 rounded-md hover:bg-white/5">Orders</button>
+  </div>
+
+  <!-- Right Menu -->
+  <div class="flex items-center space-x-2 text-[#a1a1a6]">
+    <button class="hover:text-white transition-colors hidden sm:block px-3 py-2 rounded-md hover:bg-white/5">Account</button>
+    <button class="hover:text-white transition-colors flex items-center gap-1 px-3 py-2 rounded-md hover:bg-white/5">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+    </button>
+    <button class="md:hidden hover:text-white transition-colors focus:outline-none p-2 -mr-2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    </button>
+  </div>
+</nav>

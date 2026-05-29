@@ -4,23 +4,23 @@ import java.util.Objects;
 
 public class Client {
     private String email;
-    private String nume;
-    private String telefon;
+    private String name;
+    private String phoneNumber;
 
-    public Client(String email, String nume, String telefon) {
+    public Client(String email, String name, String phoneNumber) {
         this.email = email;
-        this.nume = nume;
-        this.telefon = telefon;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getNume() { return nume; }
-    public void setNume(String nume) { this.nume = nume; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getTelefon() { return telefon; }
-    public void setTelefon(String telefon) { this.telefon = telefon; }
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     @Override
     public boolean equals(Object o) {
@@ -37,6 +37,6 @@ public class Client {
 
     @Override
     public String toString() {
-        return nume + " (" + email + ", " + telefon + ")";
+        return name + " (" + email + ", " + phoneNumber + ")";
     }
 }

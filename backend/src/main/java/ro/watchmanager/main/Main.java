@@ -8,58 +8,58 @@ public class Main {
     public static void main(String[] args) {
         MagazinService service = new MagazinService();
 
-        // Testare Actiunea 1: Adaugare ceas + creare obiecte
-        Brand b1 = new Brand("Rolex", "Elvetia");
-        Brand b2 = new Brand("Apple", "SUA");
-        Curea c1 = new Curea("Otel", 20);
-        Curea c2 = new Curea("Silicon", 22);
+        // Testing Action 1: Adding watch + creating objects
+        Brand b1 = new Brand("Rolex", "Switzerland");
+        Brand b2 = new Brand("Apple", "USA");
+        Strap c1 = new Strap("Steel", 20);
+        Strap c2 = new Strap("Silicon", 22);
 
-        CeasMecanic rolex = new CeasMecanic("C1", b1, "Submariner", 45000.0, 5, c1, TipMecanism.AUTOMAT, 48);
+        MechanicalWatch rolex = new MechanicalWatch("C1", b1, "Submariner", 45000.0, 5, c1, MechanismType.AUTOMATIC, 48);
         Smartwatch appleW = new Smartwatch("C2", b2, "Watch Series 9", 2500.0, 20, c2, "watchOS", 300);
         
-        service.adaugaCeas(rolex);
-        service.adaugaCeas(appleW);
+        service.addWatch(rolex);
+        service.addWatch(appleW);
 
-        // Testare Actiunea 2: Inregistrare client
-        Client client1 = new Client("ion@test.ro", "Ion Popescu", "0722222222");
-        service.inregistrareClient(client1);
+        // Testing Action 2: Customer registration
+        Client client1 = new Client("john@test.com", "John Doe", "0722222222");
+        service.registerClient(client1);
 
-        // Testare Actiunea 4: Afisare sortata
-        System.out.println("=== Dupa adaugare (Se va vedea Apple Watch primul, avand pret mai mic) ===");
-        service.afisareCeasuriSortate();
+        // Testing Action 4: Sorted display
+        System.out.println("=== After addition (Apple Watch will be shown first, having lower price) ===");
+        service.displaySortedWatches();
 
-        // Testare Actiunea 5: Filtrare dupa brand
-        System.out.println("\n=== Filtrare Rolex ===");
-        service.filtrareDupaBrand("Rolex");
+        // Testing Action 5: Filter by brand
+        System.out.println("\n=== Filtering Rolex ===");
+        service.filterByBrand("Rolex");
 
-        // Testare Actiunea 6: Actualizare ceas
-        service.actualizareCeas("C2", 15, 2400.0);
-        System.out.println("\n=== Dupa actualizare Apple Watch la pret 2400 ===");
-        service.afisareCeasuriSortate();
+        // Testing Action 6: Watch update
+        service.updateWatch("C2", 15, 2400.0);
+        System.out.println("\n=== After updating Apple Watch to price 2400 ===");
+        service.displaySortedWatches();
 
-        // Testare Actiunea 9: Adaugare recenzie
-        service.adaugaRecenzie("C1", new Recenzie(Rating.CINCI, "Exceptional!"));
+        // Testing Action 9: Adding review
+        service.addReview("C1", new Review(Rating.FIVE, "Exceptional!"));
 
-        // Testare Actiunea 3: Plasare comanda
+        // Testing Action 3: Placing order
         try {
-            Comanda comanda1 = new Comanda("CMD1", client1, LocalDate.now());
-            comanda1.adaugaCeas(rolex);
-            service.plasareComanda(comanda1);
+            Order order1 = new Order("CMD1", client1, LocalDate.now());
+            order1.addWatch(rolex);
+            service.placeOrder(order1);
         } catch (Exception e) {
-            System.err.println("Eroare la plasarea comenzii: " + e.getMessage());
+            System.err.println("Error placing order: " + e.getMessage());
         }
 
-        // Testare Actiunea 8: Istoric comenzi
-        System.out.println("\n=== Istoric client ion@test.ro ===");
-        service.afisareIstoricComenziClient("ion@test.ro");
+        // Testing Action 8: Order history
+        System.out.println("\n=== History for customer john@test.com ===");
+        service.displayClientOrderHistory("john@test.com");
 
-        // Testare Actiunea 10: Valoare comenzi pe zi
-        System.out.println("\n=== Valoare comenzi astazi ===");
-        System.out.println(service.calculeazaValoareTotalaComenziPeZi(LocalDate.now()) + " RON");
+        // Testing Action 10: Order value per day
+        System.out.println("\n=== Order value today ===");
+        System.out.println(service.calculateTotalOrderValuePerDay(LocalDate.now()) + " RON");
 
-        // Testare Actiunea 7: Stergere ceas
-        service.stergereCeas("C2");
-        System.out.println("\n=== Dupa stergere C2 ===");
-        service.afisareCeasuriSortate();
+        // Testing Action 7: Deleting watch
+        service.deleteWatch("C2");
+        System.out.println("\n=== After deleting C2 ===");
+        service.displaySortedWatches();
     }
 }

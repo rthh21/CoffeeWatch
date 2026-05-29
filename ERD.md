@@ -1,71 +1,71 @@
-# Diagrama ERD - CoffeeWatch
+# ERD Diagram - CoffeeWatch
 
-Mai jos este reprezentarea relațională a bazei de date utilizând sintaxa Mermaid.
+Below is the relational representation of the database using Mermaid syntax.
 
 ```mermaid
 erDiagram
-    BRAND ||--o{ CEAS : "produce"
-    CUREA ||--o{ CEAS : "este montată pe"
-    CEAS ||--o{ RECENZIE : "primește"
-    CLIENT ||--o{ COMANDA : "plasează"
-    COMANDA ||--|{ COMANDA_CEAS : "conține"
-    CEAS ||--|{ COMANDA_CEAS : "apare în"
+    BRAND ||--o{ CEAS : "produces"
+    CUREA ||--o{ CEAS : "is mounted on"
+    CEAS ||--o{ RECENZIE : "receives"
+    CLIENT ||--o{ COMANDA : "places"
+    COMANDA ||--|{ COMANDA_CEAS : "contains"
+    CEAS ||--|{ COMANDA_CEAS : "appears in"
 
     BRAND {
         int id PK
-        string nume
-        string tara_origine
+        string name
+        string country_of_origin
     }
 
     CUREA {
         int id PK
         string material
-        string culoare
-        int latime
+        string color
+        int width
     }
 
     CEAS {
         string id PK
         int brand_id FK
-        string nume_model
-        double pret
-        int stoc
-        int curea_id FK
-        string tip
-        string mecanism
-        int autonomie_baterie
+        string model_name
+        double price
+        int stock
+        int strap_id FK
+        string type
+        string mechanism
+        int battery_life
     }
 
     CLIENT {
         string email PK
-        string nume
-        string telefon
+        string name
+        string phone
     }
 
     RECENZIE {
         int id PK
-        string ceas_id FK
-        string utilizator
-        string comentariu
-        int nota
+        string watch_id FK
+        string user
+        string comment
+        int rating
     }
 
     COMANDA {
-        string id_comanda PK
+        string order_id PK
         string client_email FK
-        date data_comanda
-        double valoare_totala
+        date order_date
+        double total_value
     }
 
     COMANDA_CEAS {
-        string id_comanda PK, FK
-        string ceas_id PK, FK
+        string order_id PK, FK
+        string watch_id PK, FK
     }
 ```
 
-## Explicație Relații:
-1.  **Brand -> Ceas**: Un brand poate produce mai multe modele de ceasuri (1:N).
-2.  **Curea -> Ceas**: O curea poate fi folosită pentru mai multe ceasuri (1:N).
-3.  **Ceas -> Recenzie**: Un ceas poate avea mai multe recenzii de la utilizatori diferiți (1:N).
-4.  **Client -> Comanda**: Un client poate plasa mai multe comenzi în timp (1:N).
-5.  **Comanda -> Ceas (M:N)**: O comandă poate conține mai multe ceasuri, iar un ceas poate apărea în mai multe comenzi. Aceasta este realizată prin tabela de legătură `Comanda_Ceas`.
+## Relationship Explanation:
+1.  **Brand -> Ceas**: A brand can produce multiple watch models (1:N).
+2.  **Curea -> Ceas**: A strap can be used for multiple watches (1:N).
+3.  **Ceas -> Recenzie**: A watch can have multiple reviews from different users (1:N).
+4.  **Client -> Comanda**: A client can place multiple orders over time (1:N).
+5.  **Comanda -> Ceas (M:N)**: An order can contain multiple watches, and a watch can appear in multiple orders. This is achieved through the `Comanda_Ceas` link table.

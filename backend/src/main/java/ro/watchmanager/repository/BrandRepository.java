@@ -23,8 +23,8 @@ public class BrandRepository extends GenericRepository<Brand, Integer> {
     public void create(Brand brand) throws SQLException {
         String sql = "INSERT INTO Brand (nume, tara_origine) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, brand.getNume());
-            stmt.setString(2, brand.getTaraOrigine());
+            stmt.setString(1, brand.getName());
+            stmt.setString(2, brand.getCountryOfOrigin());
             stmt.executeUpdate();
         }
     }
@@ -46,8 +46,8 @@ public class BrandRepository extends GenericRepository<Brand, Integer> {
     public void update(Integer id, Brand brand) throws SQLException {
         String sql = "UPDATE Brand SET nume = ?, tara_origine = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, brand.getNume());
-            stmt.setString(2, brand.getTaraOrigine());
+            stmt.setString(1, brand.getName());
+            stmt.setString(2, brand.getCountryOfOrigin());
             stmt.setInt(3, id);
             stmt.executeUpdate();
         }

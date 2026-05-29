@@ -1,0 +1,23 @@
+<section class="w-full bg-black px-6 md:px-16 pb-24">
+  <div class="max-w-[1400px] mx-auto">
+    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-12 text-white">Look closer.</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-[#1d1d1f] rounded-[32px] p-10 md:p-14 hover:scale-[1.02] transition-transform duration-300 cursor-pointer overflow-hidden relative min-h-[400px]" (click)="navigate.emit('catalog')">
+        <div class="relative z-10 max-w-sm">
+          <h3 class="text-3xl font-bold mb-4">Built-in satellite technology.</h3>
+          <p class="text-[#a1a1a6] font-medium text-lg">Stay connected everywhere, even off the grid.</p>
+        </div>
+        <div class="absolute bottom-0 right-0 w-2/3 h-2/3 bg-gradient-to-tl from-white/5 to-transparent rounded-tl-[100px]"></div>
+      </div>
+
+      <div class="bg-[#1d1d1f] rounded-[32px] p-10 md:p-14 hover:scale-[1.02] transition-transform duration-300 cursor-pointer overflow-hidden relative min-h-[400px]" (click)="navigate.emit('catalog')">
+        <div class="relative z-10 max-w-sm">
+          <h3 class="text-3xl font-bold mb-4">Extreme precision mechanics.</h3>
+          <p class="text-[#a1a1a6] font-medium text-lg">Exceptional finishes, created to last a lifetime.</p>
+        </div>
+        <div class="absolute bottom-0 right-0 w-2/3 h-2/3 bg-gradient-to-tl from-blue-500/10 to-transparent rounded-tl-[100px]"></div>
+      </div>
+    </div>
+  </div>
+</section>

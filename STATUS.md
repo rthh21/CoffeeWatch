@@ -1,49 +1,48 @@
-# Raport Status Proiect - CoffeeWatch
+# Project Status Report - CoffeeWatch
 
-Acest document reflectă stadiul actual al proiectului conform cerințelor impuse.
+This document reflects the current status of the project according to the imposed requirements.
 
-## 1) Definirea sistemului
-| Cerință | Status | Locație / Detalii |
+## 1) System Definition
+| Requirement | Status | Location / Details |
 | :--- | :---: | :--- |
-| Listă cu cel puțin 15 acțiuni | ✅ | Definite în `ro.watchmanager.service.MagazinService` |
-| Listă cu cel puțin 10 tipuri de obiecte | ✅ | Pachetul `ro.watchmanager.model` (Brand, Ceas, CeasMecanic, Client, Comanda, Curea, Furnizor, Recenzie, Smartwatch, Voucher) |
+| List of at least 15 actions | ✅ | Defined in `ro.watchmanager.service.MagazinService` |
+| List of at least 10 object types | ✅ | `ro.watchmanager.model` package (Brand, Ceas, CeasMecanic, Client, Comanda, Curea, Furnizor, Recenzie, Smartwatch, Voucher) |
 
-## 2) Implementare
-| Cerință | Status | Locație / Detalii |
+## 2) Implementation
+| Requirement | Status | Location / Details |
 | :--- | :---: | :--- |
-| Clase simple cu încapsulare | ✅ | Toate modelele folosesc modificatori de acces privați și metode de tip getter/setter. |
-| Cel puțin 3 colecții diferite (una sortată) | ✅ | `TreeSet` (sortat), `HashMap`, `ArrayList` în `MagazinService`. |
-| Moștenirea claselor | ✅ | `Ceas` -> `CeasMecanic`, `Smartwatch`. |
-| Implementarea interfețelor | ✅ | Interfața `Discountable` este implementată de clasa `Ceas`. |
-| Excepții custom | ✅ | `StocInsuficientException` în pachetul `exception`. |
-| Clasă serviciu | ✅ | `MagazinService` expune operațiile sistemului. |
-| Clasa Main | ✅ | `ro.watchmanager.main.Main` realizează apelurile către servicii. |
+| Simple classes with encapsulation | ✅ | All models use private access modifiers and getter/setter methods. |
+| At least 3 different collections (one sorted) | ✅ | `TreeSet` (sorted), `HashMap`, `ArrayList` in `MagazinService`. |
+| Class inheritance | ✅ | `Ceas` -> `CeasMecanic`, `Smartwatch`. |
+| Interface implementation | ✅ | `Discountable` interface is implemented by the `Ceas` class. |
+| Custom exceptions | ✅ | `StocInsuficientException` in the `exception` package. |
+| Service class | ✅ | `MagazinService` exposes the system's operations. |
+| Main class | ✅ | `ro.watchmanager.main.Main` performs service calls. |
 
-## 3) Persistență (JDBC)
-| Cerință | Status | Locație / Detalii |
+## 3) Persistence (JDBC)
+| Requirement | Status | Location / Details |
 | :--- | :---: | :--- |
-| Modelare baze de date (tabele, relații) | ✅ | Definite în `schema.sql`. |
-| Diagramă ERD | ✅ | Definită în `ERD.md` (format Mermaid). |
-| Servicii CRUD pentru 6 obiecte | ✅ | Operații complete în Repozitorii: Brand, Ceas, Client, Comanda, Curea, Recenzie. |
-| Servicii singleton generice DB | ✅ | Toate repozitoriile extind `GenericRepository` și sunt implementate ca Singleton. |
+| Database modeling (tables, relationships) | ✅ | Defined in `schema.sql`. |
+| ERD Diagram | ✅ | Defined in `ERD.md` (Mermaid format). |
+| CRUD services for 6 objects | ✅ | Complete operations in Repositories: Brand, Ceas, Client, Comanda, Curea, Recenzie. |
+| Generic DB singleton services | ✅ | All repositories extend `GenericRepository` and are implemented as Singletons. |
 
-## 4) Serviciu de audit
-| Cerință | Status | Locație / Detalii |
+## 4) Audit Service
+| Requirement | Status | Location / Details |
 | :--- | :---: | :--- |
-| Serviciu audit CSV (nume, timestamp) | ✅ | `ro.watchmanager.service.AuditService`. |
+| CSV audit service (name, timestamp) | ✅ | `ro.watchmanager.service.AuditService`. |
 
 ## 5) Coding best practices
-| Design Pattern | Status | Locație / Detalii |
+| Design Pattern | Status | Location / Details |
 | :--- | :---: | :--- |
 | Singleton | ✅ | `AuditService`, `DatabaseConnectionManager`. |
 | Builder | ✅ | `ClientBuilder`. |
 | Factory | ✅ | `CeasFactory`. |
 
-## 6) Interfața grafică
-| Cerință | Status | Locație / Detalii |
+## 6) Graphical Interface
+| Requirement | Status | Location / Details |
 | :--- | :---: | :--- |
-| JavaFX (Fereastră, Meniu, Listă, Formular) | ❌ | **Lipsă**. Proiectul nu conține o interfață grafică. |
+| JavaFX (Window, Menu, List, Form) | ❌ | **Missing**. The project does not contain a graphical interface. |
 
 ---
-**Notă:** Proiectul se compilează și rulează prin intermediul scriptului `compile_and_run.ps1` (pentru mediile Windows) sau manual prin apelarea `Main`.
- prin apelarea `Main`.
+**Note:** The project compiles and runs via the `compile_and_run.ps1` script (for Windows environments) or manually by calling `Main`.

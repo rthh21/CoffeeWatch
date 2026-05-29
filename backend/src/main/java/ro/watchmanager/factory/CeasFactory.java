@@ -3,11 +3,11 @@ package ro.watchmanager.factory;
 import ro.watchmanager.model.*;
 
 public class CeasFactory {
-    public static Ceas creeazaCeas(String tip, String id, Brand brand, String model, double pret, int stoc, Curea curea, String extraStr, int extraInt) {
-        if (tip.equalsIgnoreCase("Mecanic")) {
-            return new CeasMecanic(id, brand, model, pret, stoc, curea, TipMecanism.valueOf(extraStr.toUpperCase()), extraInt);
-        } else if (tip.equalsIgnoreCase("Smartwatch")) {
-            return new Smartwatch(id, brand, model, pret, stoc, curea, extraStr, extraInt);
+    public static Ceas createWatch(String type, String id, Brand brand, String model, double price, int stock, Curea strap, String extraStr, int extraInt) {
+        if (type.equalsIgnoreCase("Mechanical")) {
+            return new CeasMecanic(id, brand, model, price, stock, strap, TipMecanism.valueOf(extraStr.toUpperCase()), extraInt);
+        } else if (type.equalsIgnoreCase("Smartwatch")) {
+            return new Smartwatch(id, brand, model, price, stock, strap, extraStr, extraInt);
         }
         return null;
     }

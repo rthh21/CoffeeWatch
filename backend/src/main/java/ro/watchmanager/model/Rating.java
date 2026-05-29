@@ -1,20 +1,20 @@
 package ro.watchmanager.model;
 
 public enum Rating {
-    UNU(1), DOI(2), TREI(3), PATRU(4), CINCI(5);
+    ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5);
 
-    private final int valoare;
+    private final int value;
 
-    Rating(int valoare) {
-        this.valoare = valoare;
+    Rating(int value) {
+        this.value = value;
     }
 
-    public int getValoare() {
-        return valoare;
+    public int getValue() {
+        return value;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(valoare);
+        return String.valueOf(value);
     }
 }

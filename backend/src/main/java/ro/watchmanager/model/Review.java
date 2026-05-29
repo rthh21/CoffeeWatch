@@ -1,20 +1,20 @@
 package ro.watchmanager.model;
 
-public class Recenzie {
-    private Rating rating; // de la 1 la 5
+public class Review {
+    private Rating rating; // from 1 to 5
     private String text;
-    private String utilizator;
+    private String user;
 
-    public Recenzie(Rating rating, String text) {
+    public Review(Rating rating, String text) {
         this.rating = rating;
         this.text = text;
-        this.utilizator = "Anonim";
+        this.user = "Anonymous";
     }
 
-    public Recenzie(Rating rating, String text, String utilizator) {
+    public Review(Rating rating, String text, String user) {
         this.rating = rating;
         this.text = text;
-        this.utilizator = utilizator;
+        this.user = user;
     }
 
     public Rating getRating() { return rating; }
@@ -23,8 +23,8 @@ public class Recenzie {
     public String getText() { return text; }
     public void setText(String text) { this.text = text; }
 
-    public String getUtilizator() { return utilizator; }
-    public void setUtilizator(String utilizator) { this.utilizator = utilizator; }
+    public String getUser() { return user; }
+    public void setUser(String user) { this.user = user; }
 
     @Override
     public String toString() {

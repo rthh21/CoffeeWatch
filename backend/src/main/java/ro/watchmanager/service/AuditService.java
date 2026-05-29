@@ -20,11 +20,11 @@ public class AuditService {
         return instance;
     }
 
-    public void logEveniment(String numeActiune) {
+    public void logEvent(String actionName) {
         try (FileWriter fw = new FileWriter(FILE_PATH, true);
              PrintWriter pw = new PrintWriter(fw)) {
             String timestamp = LocalDateTime.now().format(formatter);
-            pw.println(numeActiune + "," + timestamp);
+            pw.println(actionName + "," + timestamp);
         } catch (IOException e) {
             e.printStackTrace();
         }

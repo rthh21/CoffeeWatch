@@ -1,21 +1,21 @@
 package ro.watchmanager.model;
 
-public class Furnizor {
+public class Supplier {
     private int id;
-    private String nume;
+    private String name;
     private String contact;
 
-    public Furnizor(int id, String nume, String contact) {
+    public Supplier(int id, String name, String contact) {
         this.id = id;
-        this.nume = nume;
+        this.name = name;
         this.contact = contact;
     }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public String getNume() { return nume; }
-    public void setNume(String nume) { this.nume = nume; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public String getContact() { return contact; }
     public void setContact(String contact) { this.contact = contact; }

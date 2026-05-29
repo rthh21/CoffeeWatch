@@ -24,8 +24,8 @@ public class ClientRepository extends GenericRepository<Client, String> {
         String sql = "INSERT INTO Client (email, nume, telefon) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, client.getEmail());
-            stmt.setString(2, client.getNume());
-            stmt.setString(3, client.getTelefon());
+            stmt.setString(2, client.getName());
+            stmt.setString(3, client.getPhoneNumber());
             stmt.executeUpdate();
         }
     }
@@ -47,8 +47,8 @@ public class ClientRepository extends GenericRepository<Client, String> {
     public void update(String email, Client client) throws SQLException {
         String sql = "UPDATE Client SET nume = ?, telefon = ? WHERE email = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, client.getNume());
-            stmt.setString(2, client.getTelefon());
+            stmt.setString(1, client.getName());
+            stmt.setString(2, client.getPhoneNumber());
             stmt.setString(3, email);
             stmt.executeUpdate();
         }

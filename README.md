@@ -1,47 +1,47 @@
-# Platformă pentru Gestiunea unui Magazin de Ceasuri (Etapa 1)
+# Watch Shop Management Platform (Stage 1)
 
-Proiectul are ca scop gestionarea unui magazin de ceasuri. Aplicația permite administrarea produselor din stoc, a clienților și a comenzilor plasate, alături de alte detalii specifice (recenzii, accesorii).
+The project aims to manage a watch shop. The application allows the administration of stock products, customers, and placed orders, along with other specific details (reviews, accessories).
 
-## 1. Definirea sistemului
+## 1. System Definition
 
-**Tipuri de obiecte (entități):**
-Sistemul este format din 8 obiecte:
-1. `Ceas` (clasa de bază pentru produse)
-2. `CeasMecanic` (subclasă pentru ceasurile clasice/mecanice)
-3. `Smartwatch` (subclasă pentru ceasurile inteligente)
-4. `Brand` (detalii despre producător)
-5. `Client` (detaliile cumpărătorilor)
-6. `Comanda` (coșul de cumpărături plasat)
-7. `Curea` (accesorii/detalii pentru ceasuri)
-8. `Recenzie` (feedback din partea clienților)
+**Object Types (Entities):**
+The system consists of 8 objects:
+1. `Ceas` (base class for products)
+2. `CeasMecanic` (subclass for classic/mechanical watches)
+3. `Smartwatch` (subclass for smartwatches)
+4. `Brand` (manufacturer details)
+5. `Client` (buyer details)
+6. `Comanda` (placed shopping cart)
+7. `Curea` (watch accessories/details)
+8. `Recenzie` (customer feedback)
 
-**Acțiuni și interogări principale:**
-În cadrul sistemului am definit și implementat următoarele 15 acțiuni:
-1. Adăugarea unui ceas nou în stocul magazinului.
-2. Înregistrarea unui utilizator/client nou în baza de date.
-3. Plasarea unei comenzi (cu actualizarea stocului).
-4. Afișarea tuturor ceasurilor disponibile, sortate automat după preț.
-5. Filtrarea și afișarea produselor pe baza unui anumit brand.
-6. Modificarea detaliilor (stocului și a prețului) pentru un anumit model de ceas deja existent.
-7. Eliminarea completă a unui ceas din sistem.
-8. Vizualizarea istoricului detaliat de comenzi pentru un client specific.
-9. Adăugarea unei recenzii la un anumit ceas din stoc.
-10. Calcularea încasărilor (valoarea totală a comenzilor) înregistrate pentru o anumită dată calendaristică.
-11. Aplicarea unui discount general pentru toate produsele din stoc.
-12. Obținerea listei de ceasuri cu stoc limitat (sub un prag specificat).
-13. Eliminarea unui client din baza de date.
-14. Calcularea valorii medii a tuturor comenzilor plasate.
-15. Obținerea unui top al celor mai recenzate produse.
+**Main Actions and Queries:**
+Within the system, I have defined and implemented the following 15 actions:
+1. Adding a new watch to the shop's stock.
+2. Registering a new user/customer in the database.
+3. Placing an order (with stock update).
+4. Displaying all available watches, automatically sorted by price.
+5. Filtering and displaying products based on a specific brand.
+6. Modifying details (stock and price) for an existing watch model.
+7. Completely removing a watch from the system.
+8. Viewing the detailed order history for a specific customer.
+9. Adding a review to a specific watch in stock.
+10. Calculating revenue (total value of orders) recorded for a specific date.
+11. Applying a general discount for all products in stock.
+12. Obtaining the list of watches with limited stock (below a specified threshold).
+13. Removing a customer from the database.
+14. Calculating the average value of all placed orders.
+15. Obtaining a top of the most reviewed products.
 
-## 2. Detalii de implementare
+## 2. Implementation Details
 
-Aplicația este dezvoltată strict în Java, respectând următoarele cerințe:
+The application is developed strictly in Java, adhering to the following requirements:
 
-- **Clase și încapsulare**: Atribute private sau protected, starea lor fiind controlată prin constructori și metode de acces (getteri și setteri).
-- **Colecții utilizate**: 
-  - `TreeSet<Ceas>`: folosit pentru stocul de ceasuri. Astfel, colecția este mereu sortată (îndeplinind cerința pentru colecție sortată).
-  - `HashMap<String, Client>`: utilizat pentru înregistrarea și căutarea rapidă a clienților după o cheie unică (adresa de email).
-  - `List<Comanda>`: folosită pentru a menține istoricul tuturor comenzilor.
-- **Moștenire și polimorfism**: Clasa de bază `Ceas` este moștenită activ de `CeasMecanic` și `Smartwatch`. Aceste obiecte derivate sunt folosite și integrate împreună cu obiectele de bază în aceeași colecție de stoc.
-- **Clasa Serviciu**: Logica aplicației a fost decuplată de modele prin clasa `MagazinService`. Aceasta are rolul de a gestiona colecțiile și de a expune toate operațiile și interogările sistemului.
-- **Clasa Main**: Reprezintă punctul de intrare în aplicație. Aici se instanțiază datele de test și se fac apeluri succesive către clasa de serviciu pentru a demonstra funcționalitățile.
+- **Classes and Encapsulation**: Private or protected attributes, their state being controlled through constructors and access methods (getters and setters).
+- **Collections Used**: 
+  - `TreeSet<Ceas>`: used for the watch stock. Thus, the collection is always sorted (fulfilling the requirement for a sorted collection).
+  - `HashMap<String, Client>`: used for rapid registration and searching of customers by a unique key (email address).
+  - `List<Comanda>`: used to maintain the history of all orders.
+- **Inheritance and Polymorphism**: The base class `Ceas` is actively inherited by `CeasMecanic` and `Smartwatch`. These derived objects are used and integrated together with the base objects in the same stock collection.
+- **Service Class**: The application logic has been decoupled from the models through the `MagazinService` class. This has the role of managing collections and exposing all system operations and queries.
+- **Main Class**: Represents the entry point of the application. Here, test data is instantiated and successive calls are made to the service class to demonstrate functionalities.

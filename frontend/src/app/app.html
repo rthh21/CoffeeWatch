@@ -1,7 +1,76 @@
-<header>
-  <h1>CoffeeWatch</h1>
-</header>
+<div class="min-h-screen bg-black text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white flex flex-col relative">
+  
+  <app-header [currentPage]="currentPage()" (navigate)="navigate($event)"></app-header>
 
-<main>
-  <router-outlet></router-outlet>
-</main>
+  <!-- MAIN CONTENT -->
+  <main class="flex-grow pt-[56px]">
+    @switch (currentPage()) {
+      
+      @case ('home') {
+        <app-hero (navigate)="navigate($event)"></app-hero>
+        <app-highlights [popularWatches]="popularWatches()" (navigate)="navigate($event)"></app-highlights>
+        <app-features (navigate)="navigate($event)"></app-features>
+      }
+
+      @case ('catalog') {
+        <app-catalog
+          [searchQuery]="searchQuery()"
+          [selectedBrand]="selectedBrand()"
+          [maxPrice]="maxPrice()"
+          [availableBrands]="availableBrands()"
+          [filteredWatches]="filteredWatches()"
+          (updateSearch)="updateSearch($event)"
+          (updateBrand)="updateBrand($event)"
+          (updatePrice)="updatePrice($event)"
+          (resetFilters)="resetFilters()"
+          (addReview)="addReview($event)"
+          (deleteWatch)="deleteWatch($event)"
+        ></app-catalog>
+      }
+
+      @case ('admin') {
+        <app-admin (navigate)="navigate($event)"></app-admin>
+      }
+
+      @case ('comenzi') {
+        <app-orders (navigate)="navigate($event)"></app-orders>
+      }
+    }
+  </main>
+  
+  <app-footer (navigate)="navigate($event)"></app-footer>
+
+  <app-toast [message]="toastMessage()"></app-toast>
+
+  <app-go-to-top [show]="showGoToTop()" (scrollToTop)="scrollToTop()"></app-go-to-top>
+
+  <!-- DELETE CONFIRMATION POPUP -->
+  @if (watchToDelete()) {
+    <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
+      <div class="bg-[#1d1d1f] border border-white/10 rounded-[28px] max-w-md w-full p-8 shadow-2xl animate-in fade-in zoom-in duration-300">
+        <div class="flex flex-col items-center text-center">
+          <div class="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+          </div>
+          
+          <h3 class="text-2xl font-bold text-white mb-2">Are you sure?</h3>
+          <p class="text-[#a1a1a6] text-sm mb-8">
+            You are about to delete the product <span class="text-white font-semibold">{{ watchToDelete().brand }} {{ watchToDelete().name }}</span>. This action is irreversible.
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-3 w-full">
+            <button (click)="confirmDelete()" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-full transition-colors order-2 sm:order-1">
+              Delete permanently
+            </button>
+            <button (click)="cancelDelete()" class="flex-1 bg-[#333336] hover:bg-[#424245] text-white font-semibold py-3 px-6 rounded-full transition-colors order-1 sm:order-2">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>

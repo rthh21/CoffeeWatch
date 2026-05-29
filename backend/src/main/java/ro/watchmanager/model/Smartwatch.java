@@ -1,23 +1,23 @@
 package ro.watchmanager.model;
 
-public class Smartwatch extends Ceas {
-    private String sistemOperare;
-    private int capacitateBaterieMah;
+public class Smartwatch extends Watch {
+    private String operatingSystem;
+    private int batteryCapacityMah;
 
-    public Smartwatch(String id, Brand brand, String numeModel, double pret, int stoc, Curea curea, String sistemOperare, int capacitateBaterieMah) {
-        super(id, brand, numeModel, pret, stoc, curea);
-        this.sistemOperare = sistemOperare;
-        this.capacitateBaterieMah = capacitateBaterieMah;
+    public Smartwatch(String id, Brand brand, String modelName, double price, int stock, Strap strap, String operatingSystem, int batteryCapacityMah) {
+        super(id, brand, modelName, price, stock, strap);
+        this.operatingSystem = operatingSystem;
+        this.batteryCapacityMah = batteryCapacityMah;
     }
 
-    public String getSistemOperare() { return sistemOperare; }
-    public void setSistemOperare(String sistemOperare) { this.sistemOperare = sistemOperare; }
+    public String getOperatingSystem() { return operatingSystem; }
+    public void setOperatingSystem(String operatingSystem) { this.operatingSystem = operatingSystem; }
 
-    public int getCapacitateBaterieMah() { return capacitateBaterieMah; }
-    public void setCapacitateBaterieMah(int capacitateBaterieMah) { this.capacitateBaterieMah = capacitateBaterieMah; }
+    public int getBatteryCapacityMah() { return batteryCapacityMah; }
+    public void setBatteryCapacityMah(int batteryCapacityMah) { this.batteryCapacityMah = batteryCapacityMah; }
 
     @Override
     public String toString() {
-        return "[Smartwatch] " + super.toString() + " | OS: " + sistemOperare + " | Baterie: " + capacitateBaterieMah + "mAh";
+        return "[Smartwatch] " + super.toString() + " | OS: " + operatingSystem + " | Battery: " + batteryCapacityMah + "mAh";
     }
 }

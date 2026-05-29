@@ -1,12 +1,12 @@
 package ro.watchmanager.repository;
 
-import ro.watchmanager.model.Recenzie;
+import ro.watchmanager.model.Review;
 import ro.watchmanager.model.Rating;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecenzieRepository extends GenericRepository<Recenzie, Integer> {
+public class RecenzieRepository extends GenericRepository<Review, Integer> {
     private static RecenzieRepository instance;
 
     private RecenzieRepository() {
@@ -21,60 +21,60 @@ public class RecenzieRepository extends GenericRepository<Recenzie, Integer> {
     }
 
     @Override
-    public void create(Recenzie r) throws SQLException {
+    public void create(Review r) throws SQLException {
         String sql = "INSERT INTO Recenzie (utilizator, comentariu, nota) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, r.getUtilizator());
+            stmt.setString(1, r.getUser());
             stmt.setString(2, r.getText());
-            stmt.setInt(3, r.getRating().getValoare());
+            stmt.setInt(3, r.getRating().getValue());
             stmt.executeUpdate();
         }
     }
 
-    public void createWithCeas(Recenzie r, String ceasId) throws SQLException {
+    public void createWithWatch(Review r, String watchId) throws SQLException {
         String sql = "INSERT INTO Recenzie (ceas_id, utilizator, comentariu, nota) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, ceasId);
-            stmt.setString(2, r.getUtilizator());
+            stmt.setString(1, watchId);
+            stmt.setString(2, r.getUser());
             stmt.setString(3, r.getText());
-            stmt.setInt(4, r.getRating().getValoare());
+            stmt.setInt(4, r.getRating().getValue());
             stmt.executeUpdate();
         }
     }
 
     @Override
-    public Recenzie read(Integer id) throws SQLException {
+    public Review read(Integer id) throws SQLException {
         String sql = "SELECT * FROM Recenzie WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return mapResultSetToRecenzie(rs);
+                return mapResultSetToReview(rs);
             }
         }
         return null;
     }
 
-    public List<Recenzie> findByCeasId(String ceasId) throws SQLException {
-        List<Recenzie> recenzii = new ArrayList<>();
+    public List<Review> findByWatchId(String watchId) throws SQLException {
+        List<Review> reviews = new ArrayList<>();
         String sql = "SELECT * FROM Recenzie WHERE ceas_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, ceasId);
+            stmt.setString(1, watchId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                recenzii.add(mapResultSetToRecenzie(rs));
+                reviews.add(mapResultSetToReview(rs));
             }
         }
-        return recenzii;
+        return reviews;
     }
 
     @Override
-    public void update(Integer id, Recenzie r) throws SQLException {
+    public void update(Integer id, Review r) throws SQLException {
         String sql = "UPDATE Recenzie SET utilizator = ?, comentariu = ?, nota = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, r.getUtilizator());
+            stmt.setString(1, r.getUser());
             stmt.setString(2, r.getText());
-            stmt.setInt(3, r.getRating().getValoare());
+            stmt.setInt(3, r.getRating().getValue());
             stmt.setInt(4, id);
             stmt.executeUpdate();
         }
@@ -90,29 +90,29 @@ public class RecenzieRepository extends GenericRepository<Recenzie, Integer> {
     }
 
     @Override
-    public List<Recenzie> findAll() throws SQLException {
-        List<Recenzie> recenzii = new ArrayList<>();
+    public List<Review> findAll() throws SQLException {
+        List<Review> reviews = new ArrayList<>();
         String sql = "SELECT * FROM Recenzie";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                recenzii.add(mapResultSetToRecenzie(rs));
+                reviews.add(mapResultSetToReview(rs));
             }
         }
-        return recenzii;
+        return reviews;
     }
 
-    private Recenzie mapResultSetToRecenzie(ResultSet rs) throws SQLException {
+    private Review mapResultSetToReview(ResultSet rs) throws SQLException {
         int nota = rs.getInt("nota");
         Rating rating = switch (nota) {
-            case 1 -> Rating.UNU;
-            case 2 -> Rating.DOI;
-            case 3 -> Rating.TREI;
-            case 4 -> Rating.PATRU;
-            case 5 -> Rating.CINCI;
-            default -> Rating.TREI;
+            case 1 -> Rating.ONE;
+            case 2 -> Rating.TWO;
+            case 3 -> Rating.THREE;
+            case 4 -> Rating.FOUR;
+            case 5 -> Rating.FIVE;
+            default -> Rating.THREE;
         };
-        return new Recenzie(
+        return new Review(
                 rating,
                 rs.getString("comentariu"),
                 rs.getString("utilizator")

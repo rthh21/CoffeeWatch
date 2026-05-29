@@ -1,44 +1,44 @@
-# WatchManager - Documentație Proiect
+# WatchManager - Project Documentation
 
-Aplicația este structurată pentru a gestiona stocul și comenzile unui magazin de ceasuri, folosind Java, JDBC (PostgreSQL) și Design Patterns.
+The application is structured to manage the stock and orders of a watch shop, using Java, JDBC (PostgreSQL), and Design Patterns.
 
-## Etapele Proiectului
+## Project Stages
 
-### Etapa 1: Extinderea Modelului și a Colecțiilor
-*   **Interfață Custom**: `Discountable` (aplică reduceri).
-    *   Locație: `model/Discountable.java`
-*   **Excepție Custom**: `StocInsuficientException` (aruncată la plasarea comenzii).
-    *   Locație: `exception/StocInsuficientException.java`
-*   **Clase Model Noi**: `Furnizor` și `Voucher`.
-    *   Locație: `model/Furnizor.java`, `model/Voucher.java`
+### Stage 1: Extending the Model and Collections
+*   **Custom Interface**: `Discountable` (applies discounts).
+    *   Location: `model/Discountable.java`
+*   **Custom Exception**: `StocInsuficientException` (thrown when placing an order).
+    *   Location: `exception/StocInsuficientException.java`
+*   **New Model Classes**: `Furnizor` and `Voucher`.
+    *   Location: `model/Furnizor.java`, `model/Voucher.java`
 
-### Etapa 2: Logică Service Avansată
-*   S-au adăugat 5 metode noi în `MagazinService` pentru procesarea datelor (discount general, top produse, etc.).
-    *   Locație: `service/MagazinService.java`
+### Stage 2: Advanced Service Logic
+*   Added 5 new methods in `MagazinService` for data processing (general discount, top products, etc.).
+    *   Location: `service/MagazinService.java`
 
-### Etapa 3: Persistența Datelor (JDBC & PostgreSQL)
-*   **Configurare Bază de Date**: Trecerea la PostgreSQL și securizarea interogărilor prin `PreparedStatement`.
-    *   Manager Conexiune: `repository/DatabaseConnectionManager.java`
-    *   Script SQL: `schema.sql` (folosește tipuri de date specifice Postgres, ex: `SERIAL`).
-*   **Repozitorii (CRUD)**: Clase care gestionează operațiile pe tabele (Client, Brand, Ceas, etc.).
-    *   Locație: folderul `repository/`
+### Stage 3: Data Persistence (JDBC & PostgreSQL)
+*   **Database Configuration**: Switching to PostgreSQL and securing queries through `PreparedStatement`.
+    *   Connection Manager: `repository/DatabaseConnectionManager.java`
+    *   SQL Script: `schema.sql` (uses specific Postgres data types, e.g., `SERIAL`).
+*   **Repositories (CRUD)**: Classes that manage operations on tables (Client, Brand, Ceas, etc.).
+    *   Location: `repository/` folder
 
-### Etapa 4: Serviciu de Audit
-*   Toate acțiunile din service sunt logate automat într-un fișier CSV.
-    *   Locație: `service/AuditService.java`
-    *   Rezultat: `audit.csv`
+### Stage 4: Audit Service
+*   All service actions are automatically logged in a CSV file.
+    *   Location: `service/AuditService.java`
+    *   Result: `audit.csv`
 
-### Etapa 5: Design Patterns
+### Stage 5: Design Patterns
 *   **Singleton**: `DatabaseConnectionManager`, `AuditService`.
-*   **Factory**: `CeasFactory` (pentru a crea instanțe de CeasMecanic/Smartwatch).
-    *   Locație: `factory/CeasFactory.java`
-*   **Builder**: `ClientBuilder` (pentru construcția obiectelor Client).
-    *   Locație: `model/ClientBuilder.java`
+*   **Factory**: `CeasFactory` (to create instances of CeasMecanic/Smartwatch).
+    *   Location: `factory/CeasFactory.java`
+*   **Builder**: `ClientBuilder` (for constructing Client objects).
+    *   Location: `model/ClientBuilder.java`
 
-## Securitate SQL
-Toate interogările folosesc `PreparedStatement` pentru a preveni atacurile de tip SQL Injection. Nu există query-uri construite prin concatenare de șiruri.
+## SQL Security
+All queries use `PreparedStatement` to prevent SQL Injection attacks. There are no queries built by string concatenation.
 
-## Structură Fișiere
+## File Structure
 ```text
 ro/watchmanager/
 ├── exception/
@@ -46,7 +46,7 @@ ro/watchmanager/
 ├── factory/
 │   └── CeasFactory.java
 ├── model/
-│   ├── Ceas.java (implementează Discountable)
+│   ├── Ceas.java (implements Discountable)
 │   ├── ClientBuilder.java
 │   ├── Discountable.java
 │   ├── Furnizor.java
@@ -55,7 +55,7 @@ ro/watchmanager/
 │   ├── DatabaseConnectionManager.java (Singleton, Postgres)
 │   ├── BrandRepository.java
 │   ├── ClientRepository.java
-│   ├── ... (restul repozitoriilor)
+│   ├── ... (rest of the repositories)
 └── service/
     ├── AuditService.java (Singleton)
     └── MagazinService.java

@@ -3,35 +3,35 @@ package ro.watchmanager.model;
 import java.util.Objects;
 
 public class Brand {
-    private String nume;
-    private String taraOrigine;
+    private String name;
+    private String countryOfOrigin;
 
-    public Brand(String nume, String taraOrigine) {
-        this.nume = nume;
-        this.taraOrigine = taraOrigine;
+    public Brand(String name, String countryOfOrigin) {
+        this.name = name;
+        this.countryOfOrigin = countryOfOrigin;
     }
 
-    public String getNume() { return nume; }
-    public void setNume(String nume) { this.nume = nume; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getTaraOrigine() { return taraOrigine; }
-    public void setTaraOrigine(String taraOrigine) { this.taraOrigine = taraOrigine; }
+    public String getCountryOfOrigin() { return countryOfOrigin; }
+    public void setCountryOfOrigin(String countryOfOrigin) { this.countryOfOrigin = countryOfOrigin; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Brand brand = (Brand) o;
-        return Objects.equals(nume, brand.nume) && Objects.equals(taraOrigine, brand.taraOrigine);
+        return Objects.equals(name, brand.name) && Objects.equals(countryOfOrigin, brand.countryOfOrigin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nume, taraOrigine);
+        return Objects.hash(name, countryOfOrigin);
     }
 
     @Override
     public String toString() {
-        return nume + " (" + taraOrigine + ")";
+        return name + " (" + countryOfOrigin + ")";
     }
 }

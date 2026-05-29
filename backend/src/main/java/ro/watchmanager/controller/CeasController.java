@@ -1,10 +1,11 @@
 package ro.watchmanager.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ro.watchmanager.model.Ceas;
+import ro.watchmanager.model.Watch;
 import ro.watchmanager.model.Brand;
-import ro.watchmanager.model.Comanda;
+import ro.watchmanager.model.Order;
 import ro.watchmanager.service.MagazinService;
+import ro.watchmanager.repository.CeasRepository;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -15,30 +16,40 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 public class CeasController {
 
-    private final MagazinService magazinService;
+    private final MagazinService shopService;
+    private final CeasRepository watchRepository;
 
     public CeasController() {
-        // Normally we would use @Service and constructor injection, 
-        // but since MagazinService is currently a plain class, 
-        // we'll initialize it here or refactor it to @Service.
-        this.magazinService = new MagazinService();
-        
-        // Mocking some data for immediate testing
-        magazinService.adaugaCeas(new ro.watchmanager.model.CeasMecanic("C1", new Brand("Rolex", "Elvetia"), "Submariner", 45000, 5, new ro.watchmanager.model.Curea("Otel", 20), ro.watchmanager.model.TipMecanism.AUTOMAT, 48));
+        this.shopService = new MagazinService();
+        this.watchRepository = CeasRepository.getInstance();
     }
 
     @GetMapping
-    public Collection<Ceas> getAllCeasuri() {
-        return magazinService.getStocCeasuri();
+    public Collection<Watch> getAllWatches() {
+        try {
+            return watchRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return shopService.getWatchStock(); // Fallback
+        }
     }
 
     @GetMapping("/brand/{brand}")
-    public List<Ceas> getByBrand(@PathVariable String brand) {
-        return magazinService.getCeasuriByBrand(brand);
+    public List<Watch> getByBrand(@PathVariable String brand) {
+        return shopService.getWatchesByBrand(brand);
     }
 
-    @PostMapping("/comanda")
-    public void plasareComanda(@RequestBody Comanda comanda) throws Exception {
-        magazinService.plasareComanda(comanda);
+    @PostMapping("/order")
+    public void placeOrder(@RequestBody Order order) throws Exception {
+        shopService.placeOrder(order);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteWatch(@PathVariable String id) {
+        try {
+            watchRepository.delete(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

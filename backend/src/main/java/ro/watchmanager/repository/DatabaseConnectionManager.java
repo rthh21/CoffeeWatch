@@ -7,14 +7,14 @@ import java.sql.SQLException;
 public class DatabaseConnectionManager {
     private static DatabaseConnectionManager instance;
     private Connection connection;
-    private static final String URL = "jdbc:postgresql://localhost:5432/watch_manager";
-    private static final String USER = "rth";
+    private static final String URL = "jdbc:h2:mem:testdb";
+    private static final String USER = "sa";
     private static final String PASSWORD = "password";
 
     private DatabaseConnectionManager() {
         try {
-            // Load the explicit driver for PostgreSQL
-            Class.forName("org.postgresql.Driver");
+            
+            Class.forName("org.h2.Driver");
             this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

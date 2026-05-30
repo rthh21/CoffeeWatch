@@ -6,23 +6,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecenzieRepository extends GenericRepository<Review, Integer> {
-    private static RecenzieRepository instance;
+public class ReviewRepository extends GenericRepository<Review, Integer> {
+    private static ReviewRepository instance;
 
-    private RecenzieRepository() {
+    private ReviewRepository() {
         super();
     }
 
-    public static RecenzieRepository getInstance() {
+    public static ReviewRepository getInstance() {
         if (instance == null) {
-            instance = new RecenzieRepository();
+            instance = new ReviewRepository();
         }
         return instance;
     }
 
     @Override
     public void create(Review r) throws SQLException {
-        String sql = "INSERT INTO Recenzie (utilizator, comentariu, nota) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Review (user_name, text_content, rating) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, r.getUser());
             stmt.setString(2, r.getText());
@@ -32,7 +32,7 @@ public class RecenzieRepository extends GenericRepository<Review, Integer> {
     }
 
     public void createWithWatch(Review r, String watchId) throws SQLException {
-        String sql = "INSERT INTO Recenzie (ceas_id, utilizator, comentariu, nota) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Review (watch_id, user_name, text_content, rating) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, watchId);
             stmt.setString(2, r.getUser());
@@ -44,7 +44,7 @@ public class RecenzieRepository extends GenericRepository<Review, Integer> {
 
     @Override
     public Review read(Integer id) throws SQLException {
-        String sql = "SELECT * FROM Recenzie WHERE id = ?";
+        String sql = "SELECT * FROM Review WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -57,7 +57,7 @@ public class RecenzieRepository extends GenericRepository<Review, Integer> {
 
     public List<Review> findByWatchId(String watchId) throws SQLException {
         List<Review> reviews = new ArrayList<>();
-        String sql = "SELECT * FROM Recenzie WHERE ceas_id = ?";
+        String sql = "SELECT * FROM Review WHERE watch_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, watchId);
             ResultSet rs = stmt.executeQuery();
@@ -70,7 +70,7 @@ public class RecenzieRepository extends GenericRepository<Review, Integer> {
 
     @Override
     public void update(Integer id, Review r) throws SQLException {
-        String sql = "UPDATE Recenzie SET utilizator = ?, comentariu = ?, nota = ? WHERE id = ?";
+        String sql = "UPDATE Review SET user_name = ?, text_content = ?, rating = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, r.getUser());
             stmt.setString(2, r.getText());
@@ -82,7 +82,7 @@ public class RecenzieRepository extends GenericRepository<Review, Integer> {
 
     @Override
     public void delete(Integer id) throws SQLException {
-        String sql = "DELETE FROM Recenzie WHERE id = ?";
+        String sql = "DELETE FROM Review WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
@@ -92,7 +92,7 @@ public class RecenzieRepository extends GenericRepository<Review, Integer> {
     @Override
     public List<Review> findAll() throws SQLException {
         List<Review> reviews = new ArrayList<>();
-        String sql = "SELECT * FROM Recenzie";
+        String sql = "SELECT * FROM Review";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -103,7 +103,7 @@ public class RecenzieRepository extends GenericRepository<Review, Integer> {
     }
 
     private Review mapResultSetToReview(ResultSet rs) throws SQLException {
-        int nota = rs.getInt("nota");
+        int nota = rs.getInt("rating");
         Rating rating = switch (nota) {
             case 1 -> Rating.ONE;
             case 2 -> Rating.TWO;
@@ -114,8 +114,8 @@ public class RecenzieRepository extends GenericRepository<Review, Integer> {
         };
         return new Review(
                 rating,
-                rs.getString("comentariu"),
-                rs.getString("utilizator")
+                rs.getString("text_content"),
+                rs.getString("user_name")
         );
     }
 }

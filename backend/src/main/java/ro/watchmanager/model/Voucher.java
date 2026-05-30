@@ -1,17 +1,17 @@
 package ro.watchmanager.model;
 
 public class Voucher {
-    private String cod;
-    private double valoare;
+    private String code;
+    private double value;
 
-    public Voucher(String cod, double valoare) {
-        this.cod = cod;
-        this.valoare = valoare;
+    public Voucher(String code, double value) {
+        this.code = code;
+        this.value = value;
     }
 
-    public String getCod() { return cod; }
-    public void setCod(String cod) { this.cod = cod; }
+    public String getCode() { return code; }
+    public void setCode(String code) { this.code = code; }
 
-    public double getValoare() { return valoare; }
-    public void setValoare(double valoare) { this.valoare = valoare; }
+    public double getValue() { return value; }
+    public void setValue(double value) { this.value = value; }
 }

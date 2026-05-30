@@ -5,11 +5,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       @for (watch of popularWatches; track watch.id) {
         <div class="bg-[#1d1d1f] rounded-[32px] overflow-hidden flex flex-col group cursor-pointer hover:bg-[#252528] transition-colors duration-300" (click)="navigate.emit('catalog')">
-          <div class="w-full h-[280px] bg-[#000000] relative overflow-hidden">
+          <div class="w-full h-[280px] bg-white p-6 relative overflow-hidden">
             <span class="absolute top-4 left-4 z-10 text-[10px] uppercase font-semibold px-3 py-1 bg-white/10 text-white rounded-full backdrop-blur-md">
               {{ watch.type }}
             </span>
-            <img [src]="watch.image" [alt]="watch.name" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out will-change-transform">
+            <img [src]="watch.image" [alt]="watch.name" loading="lazy" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500 ease-out will-change-transform">
           </div>
           
           <div class="p-8 flex flex-col flex-grow justify-between">

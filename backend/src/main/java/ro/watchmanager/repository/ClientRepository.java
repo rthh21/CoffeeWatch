@@ -21,7 +21,7 @@ public class ClientRepository extends GenericRepository<Client, String> {
 
     @Override
     public void create(Client client) throws SQLException {
-        String sql = "INSERT INTO Client (email, nume, telefon) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Client (email, name, phone_number) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, client.getEmail());
             stmt.setString(2, client.getName());
@@ -37,7 +37,7 @@ public class ClientRepository extends GenericRepository<Client, String> {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return new Client(rs.getString("email"), rs.getString("nume"), rs.getString("telefon"));
+                return new Client(rs.getString("email"), rs.getString("name"), rs.getString("phone_number"));
             }
         }
         return null;
@@ -45,7 +45,7 @@ public class ClientRepository extends GenericRepository<Client, String> {
 
     @Override
     public void update(String email, Client client) throws SQLException {
-        String sql = "UPDATE Client SET nume = ?, telefon = ? WHERE email = ?";
+        String sql = "UPDATE Client SET name = ?, phone_number = ? WHERE email = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, client.getName());
             stmt.setString(2, client.getPhoneNumber());
@@ -70,7 +70,7 @@ public class ClientRepository extends GenericRepository<Client, String> {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                clients.add(new Client(rs.getString("email"), rs.getString("nume"), rs.getString("telefon")));
+                clients.add(new Client(rs.getString("email"), rs.getString("name"), rs.getString("phone_number")));
             }
         }
         return clients;

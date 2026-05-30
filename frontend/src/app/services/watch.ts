@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class WatchService {
-  private apiUrl = '/api/ceasuri';
+  private apiUrl = '/api/watches';
 
   constructor(private http: HttpClient) { }
 
@@ -19,6 +19,6 @@ export class WatchService {
   }
 
   placeOrder(order: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/comanda`, order);
+    return this.http.post<any>(`${this.apiUrl}/order`, order);
   }
 }

@@ -5,26 +5,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CeasRepository extends GenericRepository<Watch, String> {
-    private static CeasRepository instance;
+public class WatchRepository extends GenericRepository<Watch, String> {
+    private static WatchRepository instance;
 
-    private CeasRepository() {
+    private WatchRepository() {
         super();
     }
 
-    public static CeasRepository getInstance() {
+    public static WatchRepository getInstance() {
         if (instance == null) {
-            instance = new CeasRepository();
+            instance = new WatchRepository();
         }
         return instance;
     }
 
     @Override
     public void create(Watch watch) throws SQLException {
-        String sql = "INSERT INTO Ceas (id, brand_id, nume_model, pret, stoc, tip, mecanism, rezerva_putere, sistem_operare, autonomie_baterie) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Watch (id, brand_id, model_name, price, stock, type, mechanism_type, power_reserve, operating_system, battery_capacity, image_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, watch.getId());
-            stmt.setInt(2, 1); // Simplified for now
+            stmt.setInt(2, 1); 
             stmt.setString(3, watch.getModelName());
             stmt.setDouble(4, watch.getPrice());
             stmt.setInt(5, watch.getStock());
@@ -43,13 +43,14 @@ public class CeasRepository extends GenericRepository<Watch, String> {
                 stmt.setString(9, sw.getOperatingSystem());
                 stmt.setInt(10, sw.getBatteryCapacityMah());
             }
+            stmt.setString(11, watch.getImageUrl());
             stmt.executeUpdate();
         }
     }
 
     @Override
     public Watch read(String id) throws SQLException {
-        String sql = "SELECT * FROM Ceas WHERE id = ?";
+        String sql = "SELECT * FROM Watch WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -62,7 +63,7 @@ public class CeasRepository extends GenericRepository<Watch, String> {
 
     @Override
     public void update(String id, Watch watch) throws SQLException {
-        String sql = "UPDATE Ceas SET nume_model = ?, pret = ?, stoc = ?, mecanism = ?, rezerva_putere = ?, sistem_operare = ?, autonomie_baterie = ? WHERE id = ?";
+        String sql = "UPDATE Watch SET model_name = ?, price = ?, stock = ?, mechanism_type = ?, power_reserve = ?, operating_system = ?, battery_capacity = ?, image_url = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, watch.getModelName());
             stmt.setDouble(2, watch.getPrice());
@@ -80,14 +81,15 @@ public class CeasRepository extends GenericRepository<Watch, String> {
                 stmt.setString(6, sw.getOperatingSystem());
                 stmt.setInt(7, sw.getBatteryCapacityMah());
             }
-            stmt.setString(8, id);
+            stmt.setString(8, watch.getImageUrl());
+            stmt.setString(9, id);
             stmt.executeUpdate();
         }
     }
 
     @Override
     public void delete(String id) throws SQLException {
-        String sql = "DELETE FROM Ceas WHERE id = ?";
+        String sql = "DELETE FROM Watch WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, id);
             stmt.executeUpdate();
@@ -97,7 +99,7 @@ public class CeasRepository extends GenericRepository<Watch, String> {
     @Override
     public List<Watch> findAll() throws SQLException {
         List<Watch> watches = new ArrayList<>();
-        String sql = "SELECT * FROM Ceas";
+        String sql = "SELECT * FROM Watch";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -108,12 +110,13 @@ public class CeasRepository extends GenericRepository<Watch, String> {
     }
 
     private Watch mapResultSetToWatch(ResultSet rs) throws SQLException {
-        String type = rs.getString("tip");
+        String type = rs.getString("type");
         String id = rs.getString("id");
-        String modelName = rs.getString("nume_model");
-        double price = rs.getDouble("pret");
-        int stock = rs.getInt("stoc");
+        String modelName = rs.getString("model_name");
+        double price = rs.getDouble("price");
+        int stock = rs.getInt("stock");
         int brandId = rs.getInt("brand_id");
+        String imageUrl = rs.getString("image_url");
         
         Brand brand = BrandRepository.getInstance().read(brandId);
         if (brand == null) {
@@ -121,13 +124,13 @@ public class CeasRepository extends GenericRepository<Watch, String> {
         }
 
         if ("Mechanical".equals(type)) {
-            MechanismType mechanism = MechanismType.valueOf(rs.getString("mecanism"));
-            int reserve = rs.getInt("rezerva_putere");
-            return new MechanicalWatch(id, brand, modelName, price, stock, null, mechanism, reserve);
+            MechanismType mechanism = MechanismType.valueOf(rs.getString("mechanism_type"));
+            int reserve = rs.getInt("power_reserve");
+            return new MechanicalWatch(id, brand, modelName, price, stock, null, imageUrl, mechanism, reserve);
         } else {
-            String os = rs.getString("sistem_operare");
-            int battery = rs.getInt("autonomie_baterie");
-            return new Smartwatch(id, brand, modelName, price, stock, null, os, battery);
+            String os = rs.getString("operating_system");
+            int battery = rs.getInt("battery_capacity");
+            return new Smartwatch(id, brand, modelName, price, stock, null, imageUrl, os, battery);
         }
     }
 }

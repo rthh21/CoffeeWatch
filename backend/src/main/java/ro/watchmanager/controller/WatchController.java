@@ -4,24 +4,24 @@ import org.springframework.web.bind.annotation.*;
 import ro.watchmanager.model.Watch;
 import ro.watchmanager.model.Brand;
 import ro.watchmanager.model.Order;
-import ro.watchmanager.service.MagazinService;
-import ro.watchmanager.repository.CeasRepository;
+import ro.watchmanager.service.ShopService;
+import ro.watchmanager.repository.WatchRepository;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ceasuri")
+@RequestMapping("/api/watches")
 @CrossOrigin(origins = "http://localhost:4200")
-public class CeasController {
+public class WatchController {
 
-    private final MagazinService shopService;
-    private final CeasRepository watchRepository;
+    private final ShopService shopService;
+    private final WatchRepository watchRepository;
 
-    public CeasController() {
-        this.shopService = new MagazinService();
-        this.watchRepository = CeasRepository.getInstance();
+    public WatchController() {
+        this.shopService = new ShopService();
+        this.watchRepository = WatchRepository.getInstance();
     }
 
     @GetMapping
@@ -30,7 +30,7 @@ public class CeasController {
             return watchRepository.findAll();
         } catch (Exception e) {
             e.printStackTrace();
-            return shopService.getWatchStock(); // Fallback
+            return shopService.getWatchStock(); 
         }
     }
 

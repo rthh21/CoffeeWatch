@@ -5,13 +5,13 @@ import ro.watchmanager.model.*;
 import java.time.LocalDate;
 import java.util.*;
 
-public class MagazinService {
+public class ShopService {
     private TreeSet<Watch> watchStock;
     private HashMap<String, Client> clients;
     private List<Order> orderHistory;
     private AuditService auditService;
 
-    public MagazinService() {
+    public ShopService() {
         this.watchStock = new TreeSet<>();
         this.clients = new HashMap<>();
         this.orderHistory = new ArrayList<>();
@@ -31,6 +31,12 @@ public class MagazinService {
     public void addWatch(Watch watch) {
         watchStock.add(watch);
         auditService.logEvent("addWatch");
+    }
+
+    public void addBrand(Brand brand) {
+        auditService.logEvent("addBrand");
+        
+        
     }
 
     public void registerClient(Client client) {
@@ -100,7 +106,7 @@ public class MagazinService {
                 .sum();
     }
 
-    // 5 NEW METHODS
+    
     public void applyGeneralDiscount(double percentage) {
         auditService.logEvent("applyGeneralDiscount");
         watchStock.forEach(c -> c.applyDiscount(percentage));

@@ -7,23 +7,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComandaRepository extends GenericRepository<Order, String> {
-    private static ComandaRepository instance;
+public class OrderRepository extends GenericRepository<Order, String> {
+    private static OrderRepository instance;
 
-    private ComandaRepository() {
+    private OrderRepository() {
         super();
     }
 
-    public static ComandaRepository getInstance() {
+    public static OrderRepository getInstance() {
         if (instance == null) {
-            instance = new ComandaRepository();
+            instance = new OrderRepository();
         }
         return instance;
     }
 
     @Override
     public void create(Order c) throws SQLException {
-        String sql = "INSERT INTO Comanda (id_comanda, client_email, data_comanda, valoare_totala) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Orders (order_id, client_email, order_date, total_value) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, c.getOrderId());
             stmt.setString(2, c.getClient().getEmail());
@@ -32,8 +32,8 @@ public class ComandaRepository extends GenericRepository<Order, String> {
             stmt.executeUpdate();
         }
 
-        // Insert into junction table
-        String junctionSql = "INSERT INTO Comanda_Ceas (id_comanda, ceas_id) VALUES (?, ?)";
+        
+        String junctionSql = "INSERT INTO Order_Watch (order_id, watch_id) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(junctionSql)) {
             for (Watch ceas : c.getWatches()) {
                 stmt.setString(1, c.getOrderId());
@@ -46,7 +46,7 @@ public class ComandaRepository extends GenericRepository<Order, String> {
 
     @Override
     public Order read(String id) throws SQLException {
-        String sql = "SELECT * FROM Comanda WHERE id_comanda = ?";
+        String sql = "SELECT * FROM Orders WHERE order_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -59,7 +59,7 @@ public class ComandaRepository extends GenericRepository<Order, String> {
 
     @Override
     public void update(String id, Order c) throws SQLException {
-        String sql = "UPDATE Comanda SET client_email = ?, data_comanda = ?, valoare_totala = ? WHERE id_comanda = ?";
+        String sql = "UPDATE Orders SET client_email = ?, order_date = ?, total_value = ? WHERE order_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, c.getClient().getEmail());
             stmt.setDate(2, Date.valueOf(c.getOrderDate()));
@@ -68,8 +68,8 @@ public class ComandaRepository extends GenericRepository<Order, String> {
             stmt.executeUpdate();
         }
         
-        // Simpler to delete and re-insert for junction table in a school project
-        String deleteJunction = "DELETE FROM Comanda_Ceas WHERE id_comanda = ?";
+        
+        String deleteJunction = "DELETE FROM Order_Watch WHERE order_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(deleteJunction)) {
             stmt.setString(1, id);
             stmt.executeUpdate();
@@ -80,14 +80,14 @@ public class ComandaRepository extends GenericRepository<Order, String> {
 
     @Override
     public void delete(String id) throws SQLException {
-        // Delete from junction first
-        String deleteJunction = "DELETE FROM Comanda_Ceas WHERE id_comanda = ?";
+        
+        String deleteJunction = "DELETE FROM Order_Watch WHERE order_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(deleteJunction)) {
             stmt.setString(1, id);
             stmt.executeUpdate();
         }
 
-        String sql = "DELETE FROM Comanda WHERE id_comanda = ?";
+        String sql = "DELETE FROM Orders WHERE order_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, id);
             stmt.executeUpdate();
@@ -97,7 +97,7 @@ public class ComandaRepository extends GenericRepository<Order, String> {
     @Override
     public List<Order> findAll() throws SQLException {
         List<Order> orders = new ArrayList<>();
-        String sql = "SELECT * FROM Comanda";
+        String sql = "SELECT * FROM Orders";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -108,20 +108,20 @@ public class ComandaRepository extends GenericRepository<Order, String> {
     }
 
     private Order mapResultSetToOrder(ResultSet rs) throws SQLException {
-        String id = rs.getString("id_comanda");
+        String id = rs.getString("order_id");
         String email = rs.getString("client_email");
-        Date data = rs.getDate("data_comanda");
+        Date data = rs.getDate("order_date");
         
         Client client = ClientRepository.getInstance().read(email);
         Order order = new Order(id, client, data.toLocalDate());
         
-        // Fetch items from junction table
-        String junctionSql = "SELECT ceas_id FROM Comanda_Ceas WHERE id_comanda = ?";
+        
+        String junctionSql = "SELECT watch_id FROM Order_Watch WHERE order_id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(junctionSql)) {
             stmt.setString(1, id);
             ResultSet rsJ = stmt.executeQuery();
             while (rsJ.next()) {
-                Watch c = CeasRepository.getInstance().read(rsJ.getString("ceas_id"));
+                Watch c = WatchRepository.getInstance().read(rsJ.getString("watch_id"));
                 if (c != null) {
                     order.addWatch(c);
                 }

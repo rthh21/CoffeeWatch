@@ -12,14 +12,16 @@ public abstract class Watch implements Comparable<Watch>, Discountable {
     private int stock;
     private Strap strap;
     private List<Review> reviews;
+    private String imageUrl;
 
-    public Watch(String id, Brand brand, String modelName, double price, int stock, Strap strap) {
+    public Watch(String id, Brand brand, String modelName, double price, int stock, Strap strap, String imageUrl) {
         this.id = id;
         this.brand = brand;
         this.modelName = modelName;
         this.price = price;
         this.stock = stock;
         this.strap = strap;
+        this.imageUrl = imageUrl;
         this.reviews = new ArrayList<>();
     }
 
@@ -32,7 +34,7 @@ public abstract class Watch implements Comparable<Watch>, Discountable {
         this.reviews.add(r);
     }
 
-    // Getters and Setters
+    
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -53,9 +55,14 @@ public abstract class Watch implements Comparable<Watch>, Discountable {
 
     public List<Review> getReviews() { return reviews; }
 
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
+    public abstract String getType();
+
     @Override
     public int compareTo(Watch otherWatch) {
-        // Sort by price (ascending). If equal, by ID to avoid overwriting in TreeSet
+        
         int result = Double.compare(this.price, otherWatch.price);
         if (result == 0) {
             return this.id.compareTo(otherWatch.id);
@@ -78,6 +85,6 @@ public abstract class Watch implements Comparable<Watch>, Discountable {
 
     @Override
     public String toString() {
-        return brand.getName() + " " + modelName + " (Price: " + price + " RON, Stock: " + stock + " pcs)";
+        return brand.getName() + " " + modelName + " (Price: " + price + " RON, Stock: " + stock + " pcs, Image: " + imageUrl + ")";
     }
 }

@@ -1,7 +1,7 @@
 package ro.watchmanager.model;
 
 public class Review {
-    private Rating rating; // from 1 to 5
+    private Rating rating; 
     private String text;
     private String user;
 

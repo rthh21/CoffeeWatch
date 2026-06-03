@@ -1,25 +1,62 @@
-<nav class="fixed top-0 w-full z-50 bg-black/70 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-4 md:px-12 h-[56px] text-xs font-medium">
+<nav class="fixed top-0 w-full z-50 bg-black/70 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-4 md:px-12 h-[56px] text-xs font-medium relative">
   
   <button class="text-lg font-semibold tracking-tight hover:text-white cursor-pointer transition-colors flex items-center gap-2 px-2 py-1 -ml-2" (click)="navigate.emit('home')">
     <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
     CoffeeWatch
   </button>
 
-  
   <div class="hidden md:flex items-center space-x-2 text-[#a1a1a6]">
     <button (click)="navigate.emit('catalog')" [class.text-white]="currentPage === 'catalog'" class="hover:text-white transition-colors px-4 py-2 rounded-md hover:bg-white/5">Catalog</button>
     <button (click)="navigate.emit('admin')" [class.text-white]="currentPage === 'admin'" class="hover:text-white transition-colors px-4 py-2 rounded-md hover:bg-white/5">Admin</button>
     <button (click)="navigate.emit('orders')" [class.text-white]="currentPage === 'orders'" class="hover:text-white transition-colors px-4 py-2 rounded-md hover:bg-white/5">Orders</button>
   </div>
 
-  
   <div class="flex items-center space-x-2 text-[#a1a1a6]">
+    <div class="relative">
+      <button (click)="toggleCart()" class="hover:text-white transition-colors flex items-center gap-1 px-3 py-2 rounded-md hover:bg-white/5 relative">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        <span *ngIf="cartCount > 0" class="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white bg-red-600 rounded-full translate-x-1/4 -translate-y-1/4">{{cartCount}}</span>
+      </button>
+
+      <div *ngIf="isCartOpen" class="absolute right-0 mt-2 w-80 bg-[#1d1d1f] border border-white/10 rounded-lg shadow-lg py-2 text-white z-50">
+        <div class="px-4 py-2 border-b border-white/10 flex justify-between items-center">
+          <h3 class="font-bold text-lg">Your Cart</h3>
+          <button (click)="toggleCart()" class="text-[#a1a1a6] hover:text-white">✕</button>
+        </div>
+        
+        <div class="max-h-60 overflow-y-auto p-2">
+          <div *ngIf="cartItems.length === 0" class="text-center py-4 text-[#a1a1a6]">
+            Your cart is empty.
+          </div>
+          
+          <div *ngFor="let item of cartItems" class="flex justify-between items-center py-2 px-2 border-b border-white/5 last:border-0 hover:bg-white/5">
+            <div class="flex-1 truncate pr-2">
+              <div class="font-semibold">{{item.watch.name || item.watch.numeModel}}</div>
+              <div class="text-xs text-[#a1a1a6]">{{item.watch.price || item.watch.pret}} RON x {{item.quantity}}</div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="font-bold">{{(item.watch.price || item.watch.pret) * item.quantity}} RON</div>
+              <button (click)="removeFromCart(item)" class="text-red-500 hover:text-red-400 p-1 bg-red-500/10 rounded" title="Remove">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div *ngIf="cartItems.length > 0" class="px-4 py-3 bg-[#1d1d1f] border-t border-white/10">
+          <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors">
+            Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+
     <button class="hover:text-white transition-colors hidden sm:block px-3 py-2 rounded-md hover:bg-white/5">Account</button>
-    <button class="hover:text-white transition-colors flex items-center gap-1 px-3 py-2 rounded-md hover:bg-white/5">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-    </button>
     <button class="md:hidden hover:text-white transition-colors focus:outline-none p-2 -mr-2">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
     </button>
   </div>
 </nav>
+

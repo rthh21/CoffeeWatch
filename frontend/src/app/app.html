@@ -1,8 +1,5 @@
 <div class="min-h-screen bg-black text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white flex flex-col relative">
-
   <app-header [currentPage]="currentPage()" (navigate)="navigate($event)"></app-header>
-
-  
   <main class="flex-grow pt-[56px]">
     @switch (currentPage()) {
       
@@ -23,7 +20,6 @@
           (updateBrand)="updateBrand($event)"
           (updatePrice)="updatePrice($event)"
           (resetFilters)="resetFilters()"
-          (addReview)="addReview($event)"
           (deleteWatch)="deleteWatch($event)"
         ></app-catalog>
       }
@@ -37,14 +33,9 @@
       }
     }
   </main>
-  
   <app-footer (navigate)="navigate($event)"></app-footer>
-
   <app-toast [message]="toastMessage()"></app-toast>
-
   <app-go-to-top [show]="showGoToTop()" (scrollToTop)="scrollToTop()"></app-go-to-top>
-
-  
   @if (watchToDelete()) {
     <div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-all duration-300">
       <div class="bg-[#1d1d1f] border border-white/10 rounded-[28px] max-w-md w-full p-8 shadow-2xl animate-in fade-in zoom-in duration-300">

@@ -6,6 +6,16 @@
       <p><strong>Brand:</strong> {{ watch.brand?.nume }}</p>
       <p><strong>Price:</strong> {{ watch.pret }} RON</p>
       <p><strong>Stock:</strong> {{ watch.stoc }}</p>
+      
+      <div class="order-section" *ngIf="watch.stoc > 0">
+        <div class="quantity-control">
+          <button (click)="decreaseQuantity(watch.id)" [disabled]="quantities[watch.id] <= 1">-</button>
+          <span>{{ quantities[watch.id] }}</span>
+          <button (click)="increaseQuantity(watch)" [disabled]="quantities[watch.id] >= watch.stoc">+</button>
+        </div>
+        <button class="order-btn" (click)="orderWatch(watch)">Order</button>
+      </div>
+      <p *ngIf="watch.stoc === 0" class="out-of-stock">Out of stock</p>
     </div>
   </div>
   <div *ngIf="watches.length === 0">

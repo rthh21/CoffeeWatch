@@ -46,7 +46,6 @@ export class App implements OnInit {
   maxPrice = signal<number>(300000);
   watchToDelete = signal<any | null>(null);
 
-  
   popularWatches = signal<any[]>([]);
   catalogWatches = signal<any[]>([]);
 
@@ -54,13 +53,9 @@ export class App implements OnInit {
     this.loadWatches();
   }
 
-  
   isLocalOrValidImage(url: string | undefined, id: string | undefined): boolean {
     if (!url) return false;
     if (url.startsWith('watches/')) return true;
-    
-    
-    
     
     const seededIds = [
       'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10',
@@ -88,15 +83,11 @@ export class App implements OnInit {
 
         const mapped = data.map(w => ({
           id: w.id || Math.random().toString(36),
-          
           brand: w.brand?.name || w.brand || 'Unknown',
-          
           name: w.modelName || w.name || 'Unknown Model',
-          
           price: w.price || 0,
-          
+          stock: w.stock || 0,
           type: w.type || (w.powerReserve || w.mechanismType ? 'Mechanical' : (w.operatingSystem || w.batteryCapacity ? 'Smartwatch' : 'Mechanical')),
-          
           image: this.isLocalOrValidImage(w.imageUrl, w.id) ? w.imageUrl : this.getWatchImage(w)
         }));
         
@@ -257,10 +248,6 @@ export class App implements OnInit {
 
   cancelDelete() {
     this.watchToDelete.set(null);
-  }
-
-  addReview(watch: any) {
-    this.showToast(`Opening review form for ${watch.name}...`);
   }
 
   showToast(message: string) {
